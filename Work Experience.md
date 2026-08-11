@@ -3,6 +3,8 @@ title: Work Experience
 layout: default
 ---
 
+# IDEAS: company icon, company link, company photos and background!
+
 Metrology Engineer Intern/Co-op (Fall 2026)
 
 Entegris · Full-time
