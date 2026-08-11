@@ -8,3 +8,8 @@ Mechanical Engineering graduate from Northwestern University and incoming M.S. M
 My technical interests include aerospace propulsion, thermofluids, spacecraft and launch vehicle systems, mechanical design, manufacturing, and hardware integration/testing. In my free time, I enjoy rock climbing and hiking, casual gaming, and tinkering with computers.
 
 Please feel free to connect with me on LinkedIn or reach out at michael_lee1@mines.edu or mlee.engr@proton.me.
+
+
+Test for embedding photos:
+
+![Description](/assets/images/denia.wiki.png)
