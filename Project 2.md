@@ -1,7 +1,7 @@
 ---
-title: Project 1
+title: Gear Reducer Transmission
 layout: default
-parent: Projects
+parent: My Projects
 grand_parent: # (Optional, if you have more levels)
 ---
 Details about Project 1...   

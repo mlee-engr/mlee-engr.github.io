@@ -1,7 +1,7 @@
 ---
-title: Projects
+title: My Projects
 layout: default
 has_children: true
-permalink: /projects/
+permalink: /My Projects/
 ---
 This page lists all my projects.   
