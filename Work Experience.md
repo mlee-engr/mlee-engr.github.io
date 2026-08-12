@@ -1,6 +1,7 @@
 ---
 title: Work Experience
 layout: default
+nav_order: 2
 ---
 
 # IDEAS: company icon, company link, company photos and background!

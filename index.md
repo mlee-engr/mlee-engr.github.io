@@ -1,6 +1,7 @@
 ---
 title: About me
 layout: about
+nav_order: 1
 ---
 
 Mechanical Engineering graduate from Northwestern University and incoming M.S. Mechanical Engineering student at Colorado School of Mines. I perform best in environments that combine theory with practice - I am not afraid to step onto the production floor to get closer to the final product.
