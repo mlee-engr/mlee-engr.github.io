@@ -1,41 +1,50 @@
 body {
   font-family: Calibri, Aptos, "Segoe UI", sans-serif;
-  font-size: 18px;
+  font-size: 16px;
+  color: #000;
 }
 
 /* Markdown headings */
 h1 {
   font-size: 32px;
+  color: #000;
 }
 
 h2 {
   font-size: 24px;
+  color: #000;
 }
 
 h3 {
   font-size: 20px;
+  color: #000;
 }
 
 h4 {
   font-size: 18px;
+  color: #000;
 }
 
 h5 {
   font-size: 16px;
+  color: #000;
 }
 
 h6 {
   font-size: 14px;
+  color: #000;
 }
 
-/* Navigation and site elements */
+/* Navigation */
 .site-title,
 .site-nav,
 .nav-list {
   font-family: Calibri, Aptos, "Segoe UI", sans-serif;
+  color: #000;
 }
 
 /* Main content width */
 .main-content {
   max-width: 1200px;
+  color: #000;
 }
