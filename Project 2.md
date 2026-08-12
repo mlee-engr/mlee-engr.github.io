@@ -7,7 +7,7 @@ nav_order: 2
 ---
 
 
-![Gearbox CAD](/assets/PDFs/Gear%20Reducer%20CAD%20Showcase.pdf)
+
 <iframe
   src="/assets/PDFs/Gear%20Reducer%20CAD%20Showcase.pdf"
   width="100%"
