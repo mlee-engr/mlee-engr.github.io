@@ -1,13 +1,13 @@
 ---
 title: Résumé
 permalink: /resume/
-layout: single
+layout: archive
 ---
 
 
 <iframe
-  src="/files/Michael_Lee_Resume.pdf"
+  src="{{ '/files/Michael_Lee_Resume.pdf' | relative_url }}#view=FitH"
   width="100%"
-  height="800px"
+  height="1200px"
   style="border: none;">
 </iframe>
