@@ -1,6 +1,13 @@
 ---
 title: Résumé
 permalink: /resume/
-layout: archive
+layout: single
 ---
-Here is my up todate resume of 
+
+
+<iframe
+  src="/files/Michael_Lee_Resume.pdf"
+  width="100%"
+  height="800px"
+  style="border: none;">
+</iframe>

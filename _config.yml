@@ -8,7 +8,7 @@
 
 # Basic Site Settings
 locale                   : "en-US"
-site_theme               : "mint" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
+site_theme               : "default" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
 title                    : "Michael Lee"
 title_separator          : "-"
 name                     : &name "Michael Lee"
@@ -28,61 +28,11 @@ author:
   pronouns         : # example: "she/her"  
   bio              : "Co-op @ Entegris | Aspiring Aerospace Engineer, lifelong learner, and minimalist"
   location         : "Denver, CO"
-  employer         : 
-  url              : # URL 
   email            : "mlee.engr@proton.me"
   linkedin         : "mlee-engr"
   phone            : "+1 (720) 778-1846"
   citizenship      : "U.S. Citizen"
 
-
-  # Academic websites
-  academia         : # URL
-  arxiv            : # URL - Update with the correct link to your profile
-  googlescholar    : # URL
-  inspire-hep      : # URL
-  impactstory      : # URL
-  orcid            : # URL
-  semantic         : # URL
-  ssrn             : # URL
-  pubmed           : # URL
-  researchgate     : # URL
-  scopus           : # URL
-  zotero           : # URL
-
-
-  # Repositories and software development
-  bitbucket        : # Username - Update with your username on the site
-  codepen          : # Username
-  dribbble         : # Username
-  kaggle           : # Username  
-  stackoverflow    : # User number or user number and name (i.e., use "1" or "1/jeff-atwood")    
-
-  # Social media
-  artstation       : # Username
-  bluesky          : #"bsky.app" # Replace this with you Bluesky username
-  facebook         : # Username
-  flickr           : # Username
-  foursquare       : # Username
-  goodreads        : # Username
-  google_plus      : # Username
-  keybase          : # Username
-  instagram        : # Username
-  lastfm           : # Username
-  mastodon         : # URL
-  medium           : # URL
-  pinterest        : # Username
-  soundcloud       : # Username
-  steam            : # Username
-  telegram         : # URL
-  tumblr           : # Username
-  twitter          : # Username for X / Twitter
-  vine             : # Username
-  weibo            : # Username
-  wikipedia        : # Username
-  xing             : # Username
-  youtube          : # Username
-  zhihu            : # Username
 
 # Publication Category - The following the list of publication categories and their headings
 publication_category:
