@@ -1,15 +1,9 @@
----
-# Only the main Sass file needs front matter (the dashes are enough)
----
-
-// ===== DM Sans Font Definitions =====
-// Regular
 @font-face {
-    font-family: 'DM Sans';
-    src: url('/assets/fonts/DMSans-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'DM Sans';
+  src: url('/assets/fonts/DMSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 // Italic
