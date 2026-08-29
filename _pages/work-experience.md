@@ -2,6 +2,7 @@
 title: Work Experience
 layout: archive
 permalink: /work-experience/
+layout: archive
 ---
 ___
 

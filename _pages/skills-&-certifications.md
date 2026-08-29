@@ -1,6 +1,7 @@
 ---
 title: Skills & Certifications
 permalink: /skills-and-certs/
+layout: archive
 ---
 ___
 **CAD:** Siemens NX, SolidWorks, Fusion <br>

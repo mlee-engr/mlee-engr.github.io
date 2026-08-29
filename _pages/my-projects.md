@@ -1,6 +1,7 @@
 ---
 title: My Projects
 permalink: /my-projects
+layout: archive
 ---
 ___
 Fun projects I've done in work, school, or and at home. \* = active project.

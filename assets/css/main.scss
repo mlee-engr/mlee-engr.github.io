@@ -1,5 +1,61 @@
 ---
+# Only the main Sass file needs front matter (the dashes are enough)
 ---
+
+// ===== DM Sans Font Definitions =====
+// Regular
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Italic
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+// Medium
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Medium Italic
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-MediumItalic.ttf') format('truetype');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+// Bold
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+// Bold Italic
+@font-face {
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
 
 /*
  * This file controls what is imported from /_sass
@@ -10,7 +66,10 @@
 
 @import
     "vendor/breakpoint/breakpoint",
-
+    
+    // Remove the "variables" import - it doesn't exist
+    // "themes" already includes the variables
+    
     "themes",
     "theme/{{ site.site_theme | default: 'default' | append: '_light' }}",
     "theme/{{ site.site_theme | default: 'default' | append: '_dark' }}",

@@ -9,7 +9,7 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "mint" # The available themes options are "default", "air", "sunrise", "mint", "dirt" and "contrast"
-title                    : "About me"
+title                    : "Michael Lee"
 title_separator          : "-"
 name                     : &name "Michael Lee"
 description              : &description "Michael Lee's Portfolio"   # Update this with a general description of your site, this is the default if not overridden by a page
@@ -26,12 +26,15 @@ author:
   avatar           : "profile.png"
   name             : "Michael Lee"
   pronouns         : # example: "she/her"  
-  bio              : "Aspiring Aerospace Engineer, lifelong learner, and minimalist"
-  location         : "Denver Metro Area, Colorado"
-  employer         : "Entegris (Fall 2026 Co-op)"
-  uri              : # URL 
-  linkedin         : "mlee-engr"
+  bio              : "Co-op @ Entegris | Aspiring Aerospace Engineer, lifelong learner, and minimalist"
+  location         : "Denver, CO"
+  employer         : 
+  url              : # URL 
   email            : "mlee.engr@proton.me"
+  linkedin         : "mlee-engr"
+  phone            : "+1 (720) 778-1846"
+  citizenship      : "U.S. Citizen"
+
 
   # Academic websites
   academia         : # URL
