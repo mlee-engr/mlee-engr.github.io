@@ -1,0 +1,59 @@
+// ==========================================================================
+// HOMEPAGE / PROJECT SECTION BOXES
+// ==========================================================================
+
+.home-section-box {
+  width: 100%;
+  margin: 2em 0 3em;
+  padding: 1.5em 1.7em;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-left: 5px solid #494e52;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.home-section-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 40%);
+  gap: 2em;
+  align-items: center;
+}
+
+.home-section-grid.reverse {
+  grid-template-columns: minmax(300px, 40%) minmax(0, 1fr);
+}
+
+.home-section-text {
+  min-width: 0;
+}
+
+.home-section-text h1,
+.home-section-text h2 {
+  margin-top: 0;
+}
+
+.home-section-text p:last-child {
+  margin-bottom: 0;
+}
+
+// ==========================================================================
+// RESPONSIVE
+// ==========================================================================
+
+@media (max-width: 768px) {
+  .home-section-box {
+    padding: 1.2em;
+  }
+
+  .home-section-grid,
+  .home-section-grid.reverse {
+    grid-template-columns: 1fr;
+    gap: 1.5em;
+  }
+
+  .home-section-grid .home-section-text {
+    order: 1;
+  }
+}

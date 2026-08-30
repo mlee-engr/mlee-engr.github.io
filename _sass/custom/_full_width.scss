@@ -1,0 +1,62 @@
+// ==========================================================================
+// CUSTOM FULL-WIDTH LAYOUT
+// ==========================================================================
+
+@media (min-width: 1024px) {
+
+  #main.main--full-width {
+    max-width: none !important;
+    display: flex !important;
+    align-items: flex-start;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  #main.main--full-width .sidebar {
+    float: none !important;
+    position: static !important;
+
+    flex: 0 0 span(2 of 12);
+    width: span(2 of 12) !important;
+
+    margin-left: span(0.5 of 12) !important;
+    margin-right: 0 !important;
+  }
+
+  #main.main--full-width .archive.archive--full-width {
+    float: none !important;
+
+    flex: 1 1 auto;
+    width: auto !important;
+    max-width: none !important;
+
+    margin-left: 15px !important;
+    margin-right: span(0.5 of 12) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+}
+
+// ==========================================================================
+// REMOVE DEFAULT ARCHIVE SUSY SIZING
+// ==========================================================================
+
+@media (min-width: 1024px) {
+
+  .archive.archive--full-width {
+    float: none !important;
+    width: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+
+  #main.main--full-width .archive.archive--full-width {
+    margin-left: 15px !important;
+    margin-right: span(0.5 of 12) !important;
+  }
+
+}

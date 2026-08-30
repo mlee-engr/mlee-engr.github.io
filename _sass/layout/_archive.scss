@@ -243,3 +243,23 @@
     }
   }
 }
+
+
+
+/* ==========================================================================
+   Custom Full Width Archive
+   ========================================================================== */
+
+@media (min-width: 1024px) {
+
+  .archive.archive--full-width {
+    float: none !important;
+    width: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: none !important;
+  }
+
+}

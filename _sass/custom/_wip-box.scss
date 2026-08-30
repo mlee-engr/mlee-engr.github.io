@@ -1,0 +1,38 @@
+/* ==========================================================================
+   WORK-IN-PROGRESS BOX
+   ========================================================================== */
+
+.wip-box {
+  position: relative;
+  margin: 2em 0 3em;
+  padding: 1.2em 1.3em;
+
+  border: 1px solid #e6d98c;
+  border-left: 5px solid #c9b84a;
+  border-radius: 6px;
+
+  background: #fff9d9;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+.wip-label {
+  display: inline-block;
+  margin-bottom: 0.75em;
+  padding: 0.35em 0.7em;
+
+  background: #c9b84a;
+  color: #fff;
+
+  border-radius: 3px;
+
+  font-size: 0.7em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.wip-content {
+  color: #000;
+  font-size: 0.95em;
+  line-height: 1.7;
+}

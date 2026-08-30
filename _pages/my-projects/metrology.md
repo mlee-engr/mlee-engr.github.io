@@ -1,6 +1,6 @@
 ---
-title: "Aerospace Testbed"
-permalink: /my-projects/aerospace-testbed/
+title: Metrology Projects
+permalink: /my-projects/metrology
 layout: archive
 ---
 {% include work-in-progress.html %}

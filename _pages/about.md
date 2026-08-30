@@ -55,7 +55,7 @@ layout: archive
           alt="Clean room"
         >
         <p class="carousel-caption">
-          Working in a clean room (ISO 7) @ Entegris (August 2026)
+          Me in an ISO 7 clean room
         </p>
       </div>
 
@@ -155,21 +155,11 @@ function changeSlide(direction) {
 
       <div class="carousel-slide-left active">
         <img
-          src="/images/about.md/mining-rig.png"
+          src="/images/my-projects/rig-v3.png"
           alt="Mining rig"
         >
         <p class="carousel-caption-left">
-          Mining rig
-        </p>
-      </div>
-
-      <div class="carousel-slide-left">
-        <img
-          src="/images/about.md/ansys.png"
-          alt="ANSYS"
-        >
-        <p class="carousel-caption-left">
-          ANSYS
+          Crypto mining rig I helped design & build, earning a profit of ~$2.5k
         </p>
       </div>
 
@@ -179,7 +169,17 @@ function changeSlide(direction) {
           alt="Gearbox"
         >
         <p class="carousel-caption-left">
-          Gearbox
+          Gear reducer project involving fatigue & yield analysis and building CAD models in Siemens NX
+        </p>
+      </div>
+
+      <div class="carousel-slide-left">
+        <img
+          src="/images/about.md/ansys.png"
+          alt="Fluent CFD simulation"
+        >
+        <p class="carousel-caption-left">
+          Fluent CFD simulation exploring gaseous mixing
         </p>
       </div>
 
@@ -218,7 +218,7 @@ function changeSlide(direction) {
 
       <p>
         For me, learning by immersion and actually encountering problems head-on
-        beats studying a textbook front to back any day. For example, CMM fixturing.
+        beats studying a textbook front to back any day. 
       </p>
 
       <p>

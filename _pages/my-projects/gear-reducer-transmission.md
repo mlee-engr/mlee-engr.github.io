@@ -3,8 +3,6 @@ title: "Gear Reducer Transmission"
 permalink: /my-projects/gear-reducer/
 layout: archive
 ---
+{% include work-in-progress.html %}
 
-** background <br>
-** problem <br>
-** design criteria  <br>
-** what I learned / results <br>
+COMING SOON! :))
