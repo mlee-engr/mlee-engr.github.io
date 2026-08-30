@@ -1,9 +1,13 @@
+---
+---
+
+
 @font-face {
-  font-family: 'DM Sans';
-  src: url('/assets/fonts/DMSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'DM Sans';
+    src: url('/assets/fonts/DMSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+   font-style: normal;
+    font-display: swap;
 }
 
 // Italic
@@ -199,7 +203,9 @@
   width: 40%;
   max-width: 500px;
   height: 500px;
-  margin: 0 2em 1.5em 0;
+
+  margin: 1.5em 2em 1.5em 0;
+
   text-align: center;
 }
 
@@ -274,22 +280,26 @@
 
 // WIP Text Box (Custom)
 
+// ===== Work-in-Progress Box =====
+
 .wip-box {
   position: relative;
   margin: 2em 0 3em;
-  padding: 1em 1em;
-  border: 1px solid #d0d0d0;
-  border-left: 5px solid #494e52;
-  background: #f7f7f7;
-  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.08);
+  padding: 1.2em 1.3em;
+  border: 1px solid #e6d98c;
+  border-left: 5px solid #c9b84a;
+  border-radius: 6px;
+  background: #fff9d9;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.06);
 }
 
 .wip-label {
   display: inline-block;
   margin-bottom: 0.75em;
-  padding: 0.3em 0.65em;
-  background: #494e52;
+  padding: 0.35em 0.7em;
+  background: #c9b84a;
   color: #fff;
+  border-radius: 3px;
   font-size: 0.7em;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -300,4 +310,312 @@
   color: #000;
   font-size: 0.95em;
   line-height: 1.7;
+}
+
+// Showcase boxes for projects
+
+// ===== Project Cards =====
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5em;
+  margin: 2em 0;
+}
+
+.project-card {
+  display: block;
+  overflow: hidden;
+
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+
+  text-decoration: none !important;
+  color: #000 !important;
+
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+.project-card img {
+  display: block;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.project-card-content {
+  padding: 1em 1.2em 1.2em;
+}
+
+.project-card h3 {
+  margin: 0 0 0.4em;
+  color: #000 !important;
+  font-size: 1.05em;
+  line-height: 1.3;
+}
+
+.project-card p {
+  margin: 0;
+  color: #494e52 !important;
+  font-size: 0.9em;
+  line-height: 1.5;
+}
+
+// ===== Mobile =====
+
+@media (max-width: 768px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card img {
+    height: 220px;
+  }
+}
+
+// Aesthetic Projects Intro Card 
+// ===== Projects Intro Box =====
+
+.projects-intro {
+  margin: 1.5em 0 2.5em;
+  padding: 1em 1.3em;
+
+  background: #f5f6f7;
+  border: 1px solid #d5d8da;
+  border-left: 5px solid #494e52;
+  border-radius: 6px;
+
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+.projects-intro p {
+  margin: 0;
+  color: #000;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.projects-intro strong {
+  color: #000;
+}
+
+// Work Experience Boxes
+
+// ===== Work Experience Boxes =====
+
+// ===== Work Experience Boxes =====
+
+// ===== Work Experience Boxes =====
+
+.experience-box {
+  width: 100%;
+  margin: 2em 0;
+  padding: 1.5em 1.7em;
+
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-left: 5px solid #494e52;
+  border-radius: 8px;
+
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+}
+
+.experience-header {
+  display: flex;
+  align-items: center;
+  gap: 1.2em;
+
+  margin-bottom: 1.2em;
+  padding-bottom: 1em;
+
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.experience-logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 75px;
+  height: 75px;
+  flex-shrink: 0;
+
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.experience-logo {
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+}
+
+.experience-header-text {
+  flex: 1;
+}
+
+.experience-title {
+  margin: 0 0 0.35em;
+
+  color: #494e52;
+  font-size: 1.2em;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.experience-meta {
+  margin: 0;
+
+  color: #494e52;
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+.experience-description {
+  margin: 0 0 0.8em;
+
+  color: #494e52;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.experience-box ul {
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.experience-box li {
+  margin-bottom: 0.7em;
+
+  color: #494e52;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+.experience-box li:last-child {
+  margin-bottom: 0;
+}
+
+
+// ===== Mobile =====
+
+@media (max-width: 768px) {
+
+  .experience-box {
+    padding: 1.2em;
+  }
+
+  .experience-header {
+    gap: 0.9em;
+  }
+
+  .experience-logo-box {
+    width: 60px;
+    height: 60px;
+  }
+
+  .experience-title {
+    font-size: 1.1em;
+  }
+
+}
+
+// ===== Homepage Section Boxes =====
+// ===== Homepage Section Boxes =====
+
+.home-section-box {
+  width: 100%;
+  margin: 2em 0 3em;
+  padding: 1.5em 1.7em;
+  background: #fff;
+  border: 1px solid #d0d0d0;
+  border-left: 5px solid #494e52;
+  border-radius: 8px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.home-section-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 40%);
+  gap: 2em;
+  align-items: center;
+}
+
+.home-section-grid.reverse {
+  grid-template-columns: minmax(300px, 40%) minmax(0, 1fr);
+}
+
+.home-section-text {
+  min-width: 0;
+}
+
+.home-section-text h1,
+.home-section-text h2 {
+  margin-top: 0;
+}
+
+.home-section-text p:last-child {
+  margin-bottom: 0;
+}
+
+
+// ===== Carousel Positioning =====
+
+.home-section-grid .photo-carousel,
+.home-section-grid .photo-carousel-left {
+  position: relative;
+  float: none;
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+// ===== Mobile =====
+
+@media (max-width: 768px) {
+
+  .home-section-box {
+    padding: 1.2em;
+  }
+
+  .home-section-grid,
+  .home-section-grid.reverse {
+    grid-template-columns: 1fr;
+    gap: 1.5em;
+  }
+
+  .home-section-grid .photo-carousel,
+  .home-section-grid .photo-carousel-left {
+    max-width: 600px;
+    height: 500px;
+    margin: 0 auto;
+  }
+
+  .home-section-grid .home-section-text {
+    order: 1;
+  }
+
+  .home-section-grid .photo-carousel,
+  .home-section-grid .photo-carousel-left {
+    order: 2;
+  }
 }

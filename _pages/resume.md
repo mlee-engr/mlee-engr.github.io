@@ -3,7 +3,7 @@ title: Résumé
 permalink: /resume/
 layout: archive
 ---
-
+{% include work-in-progress.html %}
 
 <iframe
   src="{{ '/files/Michael_Lee_Resume.pdf' | relative_url }}#view=FitH"
