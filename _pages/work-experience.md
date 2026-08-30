@@ -30,9 +30,6 @@ layout: archive
     </div>
 
   </div>
-
-  </div>
-
   <ul>
     <li>Interpret technical drawings, GD&amp;T, and measurement documentation to perform CMM inspections and identify out-of-spec dimensions on precision-manufactured components.</li>
 
@@ -44,5 +41,4 @@ layout: archive
 
     <li>Collaborate with quality and design engineers to qualify CMM programs and manage engineering changes through SAP MOC processes.</li>
   </ul>
-
-</div>
+  </div>
