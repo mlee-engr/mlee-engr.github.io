@@ -1,7 +1,7 @@
 ---
 title: My Projects
 permalink: /my-projects/
-layout: custom-full-width
+layout: archive
 ---
 <div class="projects-intro">
   <p>

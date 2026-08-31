@@ -175,3 +175,110 @@
   margin: 0 auto;
   text-align: center;
 }
+
+/* ==========================================================================
+   Centered Carousel
+   ========================================================================== */
+
+.photo-carousel-centered {
+  position: relative;
+  float: none;
+  width: 100%;
+  max-width: 650px;
+  height: 650px;
+  margin: 2em auto;
+  text-align: center;
+  clear: both;
+}
+
+.photo-carousel-centered .carousel-slide-centered {
+  display: none !important;
+  height: 100%;
+}
+
+.photo-carousel-centered .carousel-slide-centered.active {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo-carousel-centered .carousel-slide-centered img {
+  width: 100%;
+  height: 600px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.photo-carousel-centered .carousel-caption-centered {
+  margin: 8px 0 0;
+  font-size: 0.9em;
+  color: #494e52;
+  text-align: center;
+}
+
+/* Previous / next buttons */
+.photo-carousel-centered .carousel-prev-centered,
+.photo-carousel-centered .carousel-next-centered {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 24px;
+  padding: 15px 20px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.photo-carousel-centered .carousel-prev-centered {
+  left: 10px;
+}
+
+.photo-carousel-centered .carousel-next-centered {
+  right: 10px;
+}
+
+.photo-carousel-centered .carousel-prev-centered:hover,
+.photo-carousel-centered .carousel-next-centered:hover {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .photo-carousel-centered {
+    height: 500px;
+    max-width: 100%;
+    margin: 1.5em auto;
+  }
+
+  .photo-carousel-centered .carousel-slide-centered img {
+    height: 450px;
+  }
+
+  .photo-carousel-centered .carousel-prev-centered,
+  .photo-carousel-centered .carousel-next-centered {
+    padding: 10px 14px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .photo-carousel-centered {
+    height: 400px;
+  }
+
+  .photo-carousel-centered .carousel-slide-centered img {
+    height: 350px;
+  }
+
+  .photo-carousel-centered .carousel-prev-centered,
+  .photo-carousel-centered .carousel-next-centered {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+}
