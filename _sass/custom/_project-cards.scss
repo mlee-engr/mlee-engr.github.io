@@ -97,3 +97,26 @@
     height: 220px;
   }
 }
+
+/* ==========================================================================
+   COMING SOON CARD (for projects that are work in progress)
+   ========================================================================== */
+
+.project-card-coming-soon img {
+  filter: grayscale(100%) brightness(0.9);
+}
+
+.project-card-coming-soon h3 {
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+.project-card-coming-soon p {
+  text-align: center;
+}
+
+.project-card-coming-soon:hover {
+  transform: none;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.08);
+  cursor: default;
+}
