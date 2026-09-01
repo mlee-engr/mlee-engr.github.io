@@ -31,14 +31,16 @@ layout: archive
 
   </div>
   <ul>
-    <li>Interpret technical drawings, GD&amp;T, and measurement documentation to perform CMM inspections and identify out-of-spec dimensions on precision-manufactured components.</li>
 
-    <li>Design, fabricate, and integrate custom CMM fixtures using SolidWorks CAD and 3D printing to improve measurement repeatability and accuracy.</li>
+  <li>Design, fabricate, and integrate custom inspection fixtures using SolidWorks CAD and 3D printing to improve coordinate-measuring machine (CMM) measurement repeatability and accuracy</li>
 
-    <li>Communicate with quality and metrology technicians to identify areas of improvement in current measurement programs and inspection workflows.</li>
+  <li>Interpret technical drawings, GD&T, and Inspection Methodology (IMT) documents to develop, test, and optimize CMM programs for machined and injection-molded parts, enabling accurate inspection of tight-tolerance components used in advanced semiconductor packaging</li>
 
-    <li>Develop, test, and optimize CMM programs for machined and injection-molded parts, enabling accurate dimensional verification and process control.</li>
+  <li>Work closely with quality inspectors and metrology technicians to improve inspection workflows by incorporating feedback from those closest to the final product</li>
 
-    <li>Collaborate with quality and design engineers to qualify CMM programs and manage engineering changes through SAP MOC processes.</li>
+  <li>Automate measurement data analysis using Python and Minitab to assess CMM program capability by calculating Gage R&R metrics, bias, correlation, and Cg/Cgk indices</li>
+
+  <li>Support process changes through CFMEA risk assessments and Management of Change (MOC) documentation in ETQ Reliance</li>
+
   </ul>
   </div>
