@@ -6,7 +6,7 @@ layout: archive
 {% include work-in-progress.html %}
 
 <iframe
-  src="{{ '/files/Michael_Lee_Resume.pdf' | relative_url }}#view=FitH"
+  src="https://docs.google.com/document/d/e/2PACX-1vSh9EoVKJdYfow6WVmL-cYBDH0XDVA0qQNvYO91GYlL1YDYVUnJbIJqHXxYWmu8qg/pub?embedded=true"
   width="100%"
   height="1200px"
   style="border: none;">
