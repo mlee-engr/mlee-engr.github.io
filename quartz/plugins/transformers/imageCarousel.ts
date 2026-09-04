@@ -69,12 +69,21 @@ ${imageTags}
 
 .carousel-track {
   width: 100%;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .carousel-image {
   display: none;
   width: 100%;
-  height: auto;
+  height: 500px;
+  object-fit: contain;
+}
+
+.carousel-image.active {
+  display: block;
 }
 
 .carousel-image.active {
@@ -112,7 +121,7 @@ ${imageTags}
 .carousel-caption {
   text-align: center;
   margin-top: 8px;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .carousel-caption-item {

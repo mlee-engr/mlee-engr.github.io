@@ -1,187 +1,585 @@
-import { readFile } from "node:fs/promises"
-import path from "node:path"
-import { pathToFileURL } from "node:url"
-import yaml from "yaml"
-
-import type { QuartzConfig } from "../../cfg"
-import type { QuartzPluginData } from "../../plugins/vfile"
-import type { PluginTypes } from "../../plugins/types"
+import fs from "fs"
+import path from "path"
+import YAML from "yaml"
+import { styleText } from "util"
+import { fileURLToPath } from "node:url"
+import { QuartzConfig, GlobalConfiguration, FullPageLayout } from "../../cfg"
+import { QuartzComponent, QuartzComponentConstructor } from "../../components/types"
+import { PluginTypes } from "../types"
+import {
+  PluginManifest,
+  PluginJsonEntry,
+  PluginSource,
+  QuartzPluginsJson,
+  LayoutConfig,
+  PluginLayoutDeclaration,
+  FlexGroupConfig,
+} from "./types"
+import {
+  parsePluginSource,
+  installPlugin,
+  installNativeDeps,
+  getPluginEntryPoint,
+  toFileUrl,
+  isLocalSource,
+} from "./gitLoader"
+import { loadComponentsFromPackage } from "./componentLoader"
+import { loadFramesFromPackage } from "./frameLoader"
 import { componentRegistry } from "../../components/registry"
+import { getCondition } from "./conditions"
+import Flex from "../../components/Flex"
+import MobileOnly from "../../components/MobileOnly"
+import DesktopOnly from "../../components/DesktopOnly"
+import ConditionalRender from "../../components/ConditionalRender"
 
-type PluginCategory = "transformer" | "filter" | "emitter" | "pageType"
+const CONFIG_YAML_PATH = path.join(process.cwd(), "quartz.config.yaml")
+const DEFAULT_CONFIG_YAML_PATH = path.join(process.cwd(), "quartz.config.default.yaml")
+const LEGACY_PLUGINS_JSON_PATH = path.join(process.cwd(), "quartz.plugins.json")
+const LEGACY_DEFAULT_PLUGINS_JSON_PATH = path.join(process.cwd(), "quartz.plugins.default.json")
 
-type PluginEntry = {
-  source: string
-  enabled?: boolean
-  order?: number
-  layout?: unknown
-  [key: string]: unknown
+function resolveConfigPath(): string {
+  if (fs.existsSync(CONFIG_YAML_PATH)) return CONFIG_YAML_PATH
+  if (fs.existsSync(LEGACY_PLUGINS_JSON_PATH)) return LEGACY_PLUGINS_JSON_PATH
+  if (fs.existsSync(DEFAULT_CONFIG_YAML_PATH)) return DEFAULT_CONFIG_YAML_PATH
+  if (fs.existsSync(LEGACY_DEFAULT_PLUGINS_JSON_PATH)) return LEGACY_DEFAULT_PLUGINS_JSON_PATH
+  return CONFIG_YAML_PATH
 }
 
-type PluginManifest = {
-  name?: string
-  category?: PluginCategory
-  entrypoint?: string
-  main?: string
-  components?: Record<string, unknown>
-  [key: string]: unknown
+function readPluginsJson(): QuartzPluginsJson | null {
+  const configPath = resolveConfigPath()
+  if (!fs.existsSync(configPath)) {
+    return null
+  }
+
+  const raw = fs.readFileSync(configPath, "utf-8")
+
+  if (configPath.endsWith(".yaml") || configPath.endsWith(".yml")) {
+    return YAML.parse(raw) as QuartzPluginsJson
+  }
+
+  return JSON.parse(raw) as QuartzPluginsJson
 }
 
-function pascalCase(value: string) {
-  return value
-    .split(/[-_./]+/)
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join("")
+function extractPluginName(source: PluginSource): string {
+  if (typeof source === "object" && source !== null) {
+    if (source.name) return source.name
+    return extractPluginName(source.repo)
+  }
+
+  if (isLocalSource(source)) {
+    return path.basename(source.replace(/[\/]+$/, ""))
+  }
+
+  if (source.startsWith("github:")) {
+    const withoutPrefix = source.replace("github:", "")
+    const [repoPath] = withoutPrefix.split("#")
+    const parts = repoPath.split("/")
+    return parts[parts.length - 1]
+  }
+
+  if (source.startsWith("git+") || source.startsWith("https://")) {
+    const url = source.replace("git+", "")
+    const match = url.match(/\/([^/]+?)(?:\.git)?(?:#|$)/)
+    return match?.[1] ?? source
+  }
+
+  return source
 }
 
-async function readPluginsJson() {
-  const configPath = path.join(process.cwd(), "quartz.config.yaml")
-  const source = await readFile(configPath, "utf8")
-  return yaml.parse(source) as {
-    plugins?: PluginEntry[]
-    [key: string]: unknown
+function formatSourceDisplay(source: PluginSource): string {
+  if (typeof source === "string") return source
+
+  const parts = [source.repo]
+
+  if (source.subdir) parts.push(`(subdir: ${source.subdir})`)
+  if (source.ref) parts.push(`(ref: ${source.ref})`)
+
+  return parts.join(" ")
+}
+
+function sourceKey(source: PluginSource): string {
+  if (typeof source === "string") return source
+  return JSON.stringify(source)
+}
+
+interface DependencyValidationResult {
+  errors: string[]
+  warnings: string[]
+}
+
+function validateDependencies(
+  entries: PluginJsonEntry[],
+  manifests: Map<string, PluginManifest>,
+): DependencyValidationResult {
+  const errors: string[] = []
+  const warnings: string[] = []
+
+  const sourceToEntry = new Map<string, PluginJsonEntry>()
+  const nameToSource = new Map<string, string>()
+
+  for (const entry of entries) {
+    sourceToEntry.set(sourceKey(entry.source), entry)
+    nameToSource.set(extractPluginName(entry.source), sourceKey(entry.source))
+  }
+
+  for (const entry of entries) {
+    if (!entry.enabled) continue
+
+    const manifest = manifests.get(sourceKey(entry.source))
+    if (!manifest?.dependencies?.length) continue
+
+    const pluginName = manifest.displayName || extractPluginName(entry.source)
+    const pluginOrder = entry.order ?? manifest.defaultOrder ?? 50
+
+    for (const dep of manifest.dependencies) {
+      const depEntry = sourceToEntry.get(dep)
+      const depName = extractPluginName(dep)
+
+      if (!depEntry) {
+        errors.push(
+          `Plugin "${pluginName}" requires "${depName}". Run: npx quartz plugin add ${dep}`,
+        )
+        continue
+      }
+
+      if (!depEntry.enabled) {
+        warnings.push(
+          `Plugin "${pluginName}" depends on "${depName}" which is disabled. "${pluginName}" may not function correctly.`,
+        )
+      }
+
+      const depManifest = manifests.get(dep)
+      const depOrder = depEntry.order ?? depManifest?.defaultOrder ?? 50
+
+      if (pluginOrder < depOrder) {
+        errors.push(
+          `Plugin "${pluginName}" (order: ${pluginOrder}) depends on "${depName}" (order: ${depOrder}), ` +
+            `but "${pluginName}" is configured to run first. Either increase "${pluginName}"'s order above ${depOrder} ` +
+            `or decrease "${depName}"'s order below ${pluginOrder}.`,
+        )
+      }
+    }
+  }
+
+  const graph = new Map<string, string[]>()
+
+  for (const entry of entries) {
+    const manifest = manifests.get(sourceKey(entry.source))
+
+    if (manifest?.dependencies?.length) {
+      graph.set(sourceKey(entry.source), manifest.dependencies)
+    }
+  }
+
+  const visited = new Set<string>()
+  const inStack = new Set<string>()
+
+  function detectCycle(node: string, pathSoFar: string[]): string[] | null {
+    if (inStack.has(node)) {
+      const cycleStart = pathSoFar.indexOf(node)
+      return pathSoFar.slice(cycleStart).concat(node)
+    }
+
+    if (visited.has(node)) return null
+
+    visited.add(node)
+    inStack.add(node)
+
+    for (const dep of graph.get(node) ?? []) {
+      const cycle = detectCycle(dep, [...pathSoFar, node])
+
+      if (cycle) return cycle
+    }
+
+    inStack.delete(node)
+    return null
+  }
+
+  for (const node of graph.keys()) {
+    const cycle = detectCycle(node, [])
+
+    if (cycle) {
+      const names = cycle.map(extractPluginName)
+      errors.push(`Circular dependency detected: ${names.join(" → ")}`)
+      break
+    }
+  }
+
+  return { errors, warnings }
+}
+
+async function resolvePluginManifest(source: PluginSource): Promise<PluginManifest | null> {
+  try {
+    const gitSpec = parsePluginSource(source)
+    const entryPoint = getPluginEntryPoint(gitSpec.name)
+    const module = await import(toFileUrl(entryPoint))
+
+    return module.manifest ?? null
+  } catch {
+    return null
   }
 }
 
-async function resolvePlugin(source: string) {
-  if (source.startsWith(".") || source.startsWith("/")) {
-    const resolved = path.resolve(process.cwd(), source)
+async function readManifestFromPackageJson(source: PluginSource): Promise<PluginManifest | null> {
+  try {
+    const gitSpec = parsePluginSource(source)
+
+    let pkgPath: string
+
+    if (gitSpec.npmPackage) {
+      pkgPath = fileURLToPath(import.meta.resolve(`${gitSpec.name}/package.json`))
+    } else {
+      const pluginDir = path.join(process.cwd(), ".quartz", "plugins", gitSpec.name)
+      pkgPath = path.join(pluginDir, "package.json")
+    }
+
+    if (!fs.existsSync(pkgPath)) return null
+
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"))
+
+    if (!pkg.quartz) return null
+
+    const q = pkg.quartz
+
     return {
-      module: await import(pathToFileURL(resolved).href),
-      manifest: {} as PluginManifest,
+      name: q.name ?? gitSpec.name,
+      displayName: q.displayName ?? q.name ?? gitSpec.name,
+      description: q.description ?? pkg.description ?? "No description",
+      version: q.version ?? pkg.version ?? "1.0.0",
+      author: q.author ?? pkg.author,
+      homepage: q.homepage ?? pkg.homepage,
+      category: q.category,
+      quartzVersion: q.quartzVersion,
+      dependencies: q.dependencies,
+      defaultOrder: q.defaultOrder,
+      defaultEnabled: q.defaultEnabled,
+      defaultOptions: q.defaultOptions,
+      configSchema: q.configSchema,
+      components: q.components,
+      frames: q.frames,
     }
+  } catch {
+    return null
+  }
+}
+
+async function getManifest(source: PluginSource): Promise<PluginManifest | null> {
+  return (await readManifestFromPackageJson(source)) ?? (await resolvePluginManifest(source))
+}
+
+export async function loadQuartzConfig(
+  configOverrides?: Partial<GlobalConfiguration>,
+): Promise<QuartzConfig> {
+  const json = readPluginsJson()
+
+  if (!json) {
+    const oldConfig = await import("../../../quartz")
+    return oldConfig.default
   }
 
-  const packageJsonUrl = import.meta.resolve(`${source}/package.json`)
-  const packageJson = JSON.parse(
-    await readFile(new URL(packageJsonUrl), "utf8"),
-  )
+  const configuration = {
+    ...(json.configuration as unknown as GlobalConfiguration),
+    ...configOverrides,
+  }
 
-  const manifestPath = packageJson.quartzPluginManifest
-    ? path.resolve(
-        path.dirname(new URL(packageJsonUrl).pathname),
-        packageJson.quartzPluginManifest,
+  const enabledEntries = json.plugins.filter((e) => e.enabled)
+  const manifests = new Map<string, PluginManifest>()
+
+  // Ensure all plugins are installed and collect native deps
+  const allNativeDeps = new Map<string, Map<string, string>>()
+
+  for (const entry of enabledEntries) {
+    try {
+      const gitSpec = parsePluginSource(entry.source)
+
+      if (gitSpec.npmPackage) {
+        continue
+      }
+
+      const result = await installPlugin(gitSpec, { verbose: false })
+
+      if (result.nativeDeps.size > 0) {
+        allNativeDeps.set(gitSpec.name, result.nativeDeps)
+      }
+    } catch (err) {
+      console.error(
+        styleText("red", `✗`) +
+          ` Failed to install plugin: ${styleText("yellow", formatSourceDisplay(entry.source))}\n` +
+          `  ${err instanceof Error ? err.message : String(err)}`,
       )
-    : undefined
-
-  const manifest = manifestPath
-    ? (JSON.parse(await readFile(manifestPath, "utf8")) as PluginManifest)
-    : ({} as PluginManifest)
-
-  const entrypoint =
-    manifest.entrypoint ??
-    manifest.main ??
-    packageJson.module ??
-    packageJson.main
-
-  if (!entrypoint) {
-    throw new Error(`Could not determine entrypoint for plugin ${source}`)
+    }
   }
 
-  const entrypointPath = path.resolve(
-    path.dirname(new URL(packageJsonUrl).pathname),
-    entrypoint,
-  )
-
-  return {
-    module: await import(pathToFileURL(entrypointPath).href),
-    manifest,
-  }
-}
-
-function findFactory(module: Record<string, unknown>, category: PluginCategory) {
-  if (typeof module.default === "function") {
-    return module.default
+  if (allNativeDeps.size > 0) {
+    installNativeDeps(allNativeDeps, { verbose: false })
   }
 
-  if (typeof module.plugin === "function") {
-    return module.plugin
+  // Collect manifests
+  for (const entry of enabledEntries) {
+    try {
+      const manifest = await getManifest(entry.source)
+
+      if (manifest) {
+        manifests.set(sourceKey(entry.source), manifest)
+      }
+    } catch (err) {
+      console.error(
+        styleText("red", `✗`) +
+          ` Failed to load manifest: ${styleText("yellow", formatSourceDisplay(entry.source))}\n` +
+          `  ${err instanceof Error ? err.message : String(err)}`,
+      )
+    }
   }
 
-  const functions = Object.values(module).filter(
-    (value): value is (...args: never[]) => unknown =>
-      typeof value === "function",
-  )
+  // Validate dependencies
+  const validation = validateDependencies(enabledEntries, manifests)
 
-  if (functions.length === 1) {
-    return functions[0]
+  for (const warning of validation.warnings) {
+    console.warn(styleText("yellow", `⚠`) + ` ${warning}`)
   }
 
-  throw new Error(
-    `Could not find ${category} factory in plugin module. Available exports: ${Object.keys(module).join(", ")}`,
-  )
-}
-
-async function instantiate(
-  items: PluginEntry[],
-  expectedCategory: PluginCategory,
-) {
-  const instances: unknown[] = []
-
-  for (const item of items) {
-    if (item.enabled === false) {
-      continue
+  if (validation.errors.length > 0) {
+    for (const error of validation.errors) {
+      console.error(styleText("red", `✗`) + ` ${error}`)
     }
 
-    const { module, manifest } = await resolvePlugin(item.source)
+    throw new Error(
+      `Plugin dependency validation failed with ${validation.errors.length} error(s). See above for details.`,
+    )
+  }
 
-    if (manifest.category && manifest.category !== expectedCategory) {
-      continue
+  // Categorize and sort plugins
+  const transformers: {
+    entry: PluginJsonEntry
+    manifest: PluginManifest | undefined
+  }[] = []
+
+  const filters: {
+    entry: PluginJsonEntry
+    manifest: PluginManifest | undefined
+  }[] = []
+
+  const emitters: {
+    entry: PluginJsonEntry
+    manifest: PluginManifest | undefined
+  }[] = []
+
+  const pageTypes: {
+    entry: PluginJsonEntry
+    manifest: PluginManifest | undefined
+  }[] = []
+
+  for (const entry of enabledEntries) {
+    const manifest = manifests.get(sourceKey(entry.source))
+    const category = manifest?.category
+
+    const processingCategories = ["transformer", "filter", "emitter", "pageType"] as const
+
+    const categoryMap: Record<string, typeof transformers> = {
+      transformer: transformers,
+      filter: filters,
+      emitter: emitters,
+      pageType: pageTypes,
     }
 
-    const factory = findFactory(module, expectedCategory)
+    const categories = Array.isArray(category) ? category : category ? [category] : []
 
-    const options = Object.fromEntries(
-      Object.entries(item).filter(
-        ([key]) =>
-          !["source", "enabled", "order", "layout"].includes(key),
-      ),
+    const matchedProcessing = categories.filter((c) =>
+      (processingCategories as readonly string[]).includes(c),
     )
 
-    const instance = factory(
-      Object.keys(options).length > 0 ? options : undefined,
-    )
+    if (matchedProcessing.length > 0) {
+      for (const cat of matchedProcessing) {
+        categoryMap[cat].push({ entry, manifest })
+      }
+    } else {
+      const gitSpec = parsePluginSource(entry.source)
 
-    instances.push(instance)
+      const isComponentOnly =
+        categories.length > 0 && categories.every((c) => c === "component")
+
+      if (isComponentOnly) {
+        const entryPoint = getPluginEntryPoint(gitSpec.name)
+
+        try {
+          const module = await import(toFileUrl(entryPoint))
+
+          if (typeof module.init === "function") {
+            const initOverrides = componentRegistry.getOptionOverrides(gitSpec.name)
+            const options = {
+              ...manifest?.defaultOptions,
+              ...entry.options,
+              ...initOverrides,
+            }
+
+            await module.init(Object.keys(options).length > 0 ? options : undefined)
+          }
+        } catch {
+          // Continue with manifest-based loading
+        }
+
+        if (manifest?.components && Object.keys(manifest.components).length > 0) {
+          await loadComponentsFromPackage(gitSpec.name, manifest)
+        }
+
+        if (manifest?.frames && Object.keys(manifest.frames).length > 0) {
+          await loadFramesFromPackage(gitSpec.name, manifest)
+        }
+      } else {
+        const entryPoint = getPluginEntryPoint(gitSpec.name)
+
+        try {
+          const module = await import(toFileUrl(entryPoint))
+          const detected = detectCategoryFromModule(module)
+
+          if (detected) {
+            categoryMap[detected].push({ entry, manifest })
+          } else if (manifest?.components && Object.keys(manifest.components).length > 0) {
+            await loadComponentsFromPackage(gitSpec.name, manifest)
+
+            if (manifest?.frames && Object.keys(manifest.frames).length > 0) {
+              await loadFramesFromPackage(gitSpec.name, manifest)
+            }
+          } else {
+            console.warn(
+              styleText("yellow", `⚠`) +
+                ` Could not determine category for plugin "${extractPluginName(entry.source)}". Skipping.`,
+            )
+          }
+        } catch {
+          const hasComponents =
+            manifest?.components && Object.keys(manifest.components).length > 0
+
+          const hasFrames =
+            manifest?.frames && Object.keys(manifest.frames).length > 0
+
+          if (hasComponents) {
+            await loadComponentsFromPackage(gitSpec.name, manifest)
+          }
+
+          if (hasFrames) {
+            await loadFramesFromPackage(gitSpec.name, manifest)
+          }
+
+          if (!hasComponents && !hasFrames) {
+            console.warn(
+              styleText("yellow", `⚠`) +
+                ` Could not load plugin "${extractPluginName(entry.source)}" to detect category. Skipping.`,
+            )
+          }
+        }
+      }
+    }
   }
 
-  return instances
-}
+  // Sort by order
+  const sortByOrder = (
+    a: { entry: PluginJsonEntry; manifest: PluginManifest | undefined },
+    b: { entry: PluginJsonEntry; manifest: PluginManifest | undefined },
+  ) => {
+    const orderA = a.entry.order ?? a.manifest?.defaultOrder ?? 50
+    const orderB = b.entry.order ?? b.manifest?.defaultOrder ?? 50
 
-export async function loadQuartzConfig(): Promise<QuartzConfig> {
-  const json = await readPluginsJson()
-
-  const enabledEntries = (json.plugins ?? []).filter(
-    (entry) => entry.enabled !== false,
-  )
-
-  const transformers = enabledEntries
-    .filter((entry) => entry.order !== undefined)
-    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-
-  const pluginEntries = {
-    transformers: transformers.filter(
-      (entry) => entry.source.includes("transformer"),
-    ),
-    filters: enabledEntries.filter((entry) =>
-      entry.source.includes("filter"),
-    ),
-    emitters: enabledEntries.filter((entry) =>
-      entry.source.includes("emitter"),
-    ),
-    pageTypes: enabledEntries.filter((entry) =>
-      entry.source.includes("pageType"),
-    ),
+    return orderA - orderB
   }
 
+  transformers.sort(sortByOrder)
+  filters.sort(sortByOrder)
+  emitters.sort(sortByOrder)
+  pageTypes.sort(sortByOrder)
+
+  // Instantiate plugins
+  const instantiate = async (
+    items: {
+      entry: PluginJsonEntry
+      manifest: PluginManifest | undefined
+    }[],
+    expectedCategory: ProcessingCategory,
+  ) => {
+    const instances = []
+
+    for (const { entry, manifest } of items) {
+      try {
+        const spec = parsePluginSource(entry.source)
+
+        let module
+
+        if (spec.npmPackage) {
+          module = await import(spec.name)
+        } else {
+          const entryPoint = getPluginEntryPoint(spec.name)
+          module = await import(toFileUrl(entryPoint))
+        }
+
+        const pluginName = spec.npmPackage ? spec.name : spec.name
+
+        if (manifest?.components && Object.keys(manifest.components).length > 0) {
+          await loadComponentsFromPackage(pluginName, manifest)
+        }
+
+        if (manifest?.frames && Object.keys(manifest.frames).length > 0) {
+          await loadFramesFromPackage(pluginName, manifest)
+        }
+
+        const factory = findFactory(module, expectedCategory)
+
+        if (!factory) {
+          console.warn(
+            styleText("yellow", `⚠`) +
+              ` Plugin "${extractPluginName(entry.source)}" has no factory function for category "${expectedCategory}". ` +
+              `Ensure your plugin exports a default function, a "plugin" named export, or a single exported function.`,
+          )
+
+          continue
+        }
+
+        const pluginOverrides = componentRegistry.getOptionOverrides(spec.name)
+
+        const options = {
+          ...manifest?.defaultOptions,
+          ...entry.options,
+          ...pluginOverrides,
+        }
+
+        const instance = factory(Object.keys(options).length > 0 ? options : undefined)
+
+        if (!instance || typeof instance !== "object") {
+          console.warn(
+            styleText("yellow", `⚠`) +
+              ` Plugin "${extractPluginName(entry.source)}" factory did not return a valid plugin instance. Skipping.`,
+          )
+
+          continue
+        }
+
+        if (!validateCategory(instance, expectedCategory)) {
+          console.warn(
+            styleText("yellow", `⚠`) +
+              ` Plugin "${extractPluginName(entry.source)}" declares category "${expectedCategory}" ` +
+              `but its factory returned an instance missing the required methods. Skipping.`,
+          )
+
+          continue
+        }
+
+        instances.push(instance)
+      } catch (err) {
+        console.error(
+          styleText("red", `✗`) +
+            ` Failed to instantiate plugin "${extractPluginName(entry.source)}": ${err instanceof Error ? err.message : String(err)}`,
+        )
+      }
+    }
+
+    return instances
+  }
+
+  // Import built-in plugins
   const builtinPlugins = await import("../index")
 
-  // ImageCarousel is a built-in/local transformer, so explicitly
-  // instantiate it here rather than registering it in quartz.config.yaml.
-  const builtinTransformers: unknown[] = [
-    builtinPlugins.ImageCarousel(),
-  ]
+const builtinTransformers: unknown[] = [
+  builtinPlugins.ImageCarousel(),
+]
 
   const builtinEmitters = [
     builtinPlugins.ComponentResources(),
@@ -189,114 +587,664 @@ export async function loadQuartzConfig(): Promise<QuartzConfig> {
     builtinPlugins.Static(),
   ]
 
-  const builtinPageTypes = [
-    builtinPlugins.PageTypes.NotFoundPageType(),
-  ]
+  const builtinPageTypes = [builtinPlugins.PageTypes.NotFoundPageType()]
 
   const plugins: PluginTypes = {
     transformers: [
       ...builtinTransformers,
-      ...(await instantiate(pluginEntries.transformers, "transformer")),
+      ...(await instantiate(transformers, "transformer")),
     ],
-    filters: await instantiate(pluginEntries.filters, "filter"),
+    filters: await instantiate(filters, "filter"),
     emitters: [
       ...builtinEmitters,
-      ...(await instantiate(pluginEntries.emitters, "emitter")),
+      ...(await instantiate(emitters, "emitter")),
     ],
     pageTypes: [
-      ...(await instantiate(pluginEntries.pageTypes, "pageType")),
+      ...(await instantiate(pageTypes, "pageType")),
       ...builtinPageTypes,
     ],
   }
 
+  // Load layout and add PageTypeDispatcher to emitters.
+  // This must happen after plugin instantiation so the component registry is populated.
+  const layout = await loadQuartzLayout()
+
+  plugins.emitters.push(
+    builtinPlugins.PageTypes.PageTypeDispatcher({
+      defaults: layout.defaults,
+      byPageType: layout.byPageType,
+    }),
+  )
+
   return {
-    ...json,
+    configuration,
     plugins,
-  } as QuartzConfig
+  }
 }
 
-export async function loadQuartzLayout() {
-  const json = await readPluginsJson()
+type ProcessingCategory = "transformer" | "filter" | "emitter" | "pageType"
 
-  const layout = {
-    byPageType: {
-      "404": {
-        beforeBody: [],
-        left: [],
-        right: [],
-        afterBody: [],
-      },
-      content: {
-        beforeBody: [],
-        left: [],
-        right: [],
-        afterBody: [],
-      },
-      folder: {
-        beforeBody: [],
-        left: [],
-        right: [],
-        afterBody: [],
-      },
-      tag: {
-        beforeBody: [],
-        left: [],
-        right: [],
-        afterBody: [],
-      },
-      canvas: {
-        beforeBody: [],
-        left: [],
-        right: [],
-        afterBody: [],
-      },
-      bases: {
-        beforeBody: [],
-        left: [],
-        right: [],
-        afterBody: [],
-      },
-    },
-    groups: {},
+/**
+ * Validate that a plugin instance has the required methods for its declared category.
+ */
+function validateCategory(
+  instance: Record<string, unknown>,
+  expected: ProcessingCategory,
+): boolean {
+  switch (expected) {
+    case "pageType":
+      return "match" in instance && "body" in instance && "layout" in instance
+
+    case "emitter":
+      return "emit" in instance
+
+    case "filter":
+      return "shouldPublish" in instance
+
+    case "transformer":
+      return (
+        "textTransform" in instance ||
+        "markdownPlugins" in instance ||
+        "htmlPlugins" in instance
+      )
+  }
+}
+
+/**
+ * Find the factory function from a plugin module by export convention.
+ */
+function findFactory(
+  module: Record<string, unknown>,
+  expectedCategory?: ProcessingCategory,
+): Function | null {
+  if (typeof module.default === "function") {
+    return module.default as Function
   }
 
-  for (const entry of json.plugins ?? []) {
-    if (entry.enabled === false || !entry.layout) {
-      continue
-    }
+  if (typeof module.plugin === "function") {
+    return module.plugin as Function
+  }
 
-    const pluginName = pascalCase(entry.source.split("/").pop() ?? "")
+  const exportedFunctions = Object.entries(module).filter(
+    ([key, value]) => typeof value === "function" && !key.startsWith("__"),
+  )
 
-    const plugin = componentRegistry.get(pluginName)
+  if (exportedFunctions.length === 1) {
+    return exportedFunctions[0][1] as Function
+  }
 
-    if (!plugin) {
-      continue
-    }
+  if (exportedFunctions.length > 1 && expectedCategory) {
+    for (const [, fn] of exportedFunctions) {
+      try {
+        const instance = (fn as Function)()
 
-    const layoutConfig = entry.layout as Record<string, unknown>
-
-    if (layoutConfig.position) {
-      const position = layoutConfig.position as
-        | "beforeBody"
-        | "left"
-        | "right"
-        | "afterBody"
-
-      const pageTypes = [
-        "content",
-        "folder",
-        "tag",
-        "canvas",
-        "bases",
-      ] as const
-
-      for (const pageType of pageTypes) {
-        layout.byPageType[pageType][position].push(
-          componentRegistry.instantiate(plugin),
-        )
+        if (
+          instance &&
+          typeof instance === "object" &&
+          validateCategory(instance, expectedCategory)
+        ) {
+          return fn as Function
+        }
+      } catch {
+        // This export doesn't work without args — skip it
       }
     }
   }
 
-  return layout
+  return null
+}
+
+function detectCategoryFromModule(module: unknown): ProcessingCategory | null {
+  if (!module || typeof module !== "object") return null
+
+  const mod = module as Record<string, unknown>
+
+  const factory = findFactory(mod as Record<string, unknown>)
+
+  if (factory && "quartzCategory" in factory) {
+    const cat = (factory as Record<string, unknown>).quartzCategory
+
+    if (
+      cat === "transformer" ||
+      cat === "filter" ||
+      cat === "emitter" ||
+      cat === "pageType"
+    ) {
+      return cat
+    }
+  }
+
+  if (typeof factory === "function") {
+    try {
+      const instance = factory()
+
+      if (instance && typeof instance === "object") {
+        if ("match" in instance && "body" in instance && "layout" in instance) {
+          return "pageType"
+        }
+
+        if ("emit" in instance) {
+          return "emitter"
+        }
+
+        if ("shouldPublish" in instance) {
+          return "filter"
+        }
+
+        if (
+          "textTransform" in instance ||
+          "markdownPlugins" in instance ||
+          "htmlPlugins" in instance
+        ) {
+          return "transformer"
+        }
+      }
+    } catch {
+      // Factory requires arguments or does I/O
+    }
+  }
+
+  return null
+}
+
+export async function loadQuartzLayout(
+  layoutOverrides?: {
+    defaults?: Partial<FullPageLayout>
+    byPageType?: Record<string, Partial<FullPageLayout>>
+  },
+): Promise<{
+  defaults: Partial<FullPageLayout>
+  byPageType: Record<string, Partial<FullPageLayout>>
+}> {
+  const json = readPluginsJson()
+
+  if (!json) {
+    const oldLayout = await import("../../../quartz")
+    return oldLayout.layout
+  }
+
+  const enabledWithLayout = json.plugins.filter((e) => e.enabled)
+  const layoutConfig = json.layout ?? {}
+
+  // Build default layout for all page types
+  const defaultLayout = buildLayoutForEntries(
+    enabledWithLayout,
+    layoutConfig,
+  )
+
+  // Build per-page-type overrides
+  const byPageType: Record<string, Partial<FullPageLayout>> = {}
+
+  if (layoutConfig.byPageType) {
+    for (const [pageType, override] of Object.entries(layoutConfig.byPageType)) {
+      let filteredEntries = enabledWithLayout
+
+      // Apply exclusions
+      if (override.exclude?.length) {
+        filteredEntries = filteredEntries.filter((e) => {
+          const name = extractPluginName(e.source)
+          return !override.exclude!.includes(name)
+        })
+      }
+
+      const ptLayout = buildLayoutForEntries(
+        filteredEntries,
+        layoutConfig,
+      )
+
+      // Apply position overrides
+      if (override.positions) {
+        for (const [pos, components] of Object.entries(override.positions)) {
+          if (Array.isArray(components) && components.length === 0) {
+            const key = pos as keyof Pick<
+              FullPageLayout,
+              "header" | "left" | "right" | "beforeBody" | "afterBody" | "footer"
+            >
+
+            if (key in ptLayout) {
+              ;(ptLayout as Record<string, unknown>)[key] = []
+            }
+          }
+        }
+      }
+
+      // Apply frame template override
+      if (override.template) {
+        ptLayout.frame = override.template
+      }
+
+      byPageType[pageType] = ptLayout
+    }
+  }
+
+  const HeadModule = await import("../../components/Head")
+  const head = HeadModule.default()
+
+  // Apply structural defaults
+  defaultLayout.head = head
+  defaultLayout.header = defaultLayout.header ?? []
+  defaultLayout.footer = defaultLayout.footer ?? []
+
+  // Ensure all byPageType entries inherit structural slots
+  for (const pageType of Object.keys(byPageType)) {
+    const pt = byPageType[pageType]
+
+    if (!pt.head) pt.head = head
+    if (!pt.header) pt.header = defaultLayout.header
+    if (!pt.footer) pt.footer = defaultLayout.footer
+  }
+
+  const mergedDefaults = {
+    ...defaultLayout,
+    ...layoutOverrides?.defaults,
+  }
+
+  const mergedByPageType = {
+    ...byPageType,
+  }
+
+  if (layoutOverrides?.byPageType) {
+    for (const [pageType, overrideLayout] of Object.entries(
+      layoutOverrides.byPageType,
+    )) {
+      mergedByPageType[pageType] = {
+        ...mergedByPageType[pageType],
+        ...overrideLayout,
+      }
+    }
+  }
+
+  return {
+    defaults: mergedDefaults,
+    byPageType: mergedByPageType,
+  }
+}
+
+/** @internal Exported for testing only. */
+export function buildLayoutForEntries(
+  entries: PluginJsonEntry[],
+  layoutConfig: LayoutConfig,
+): Partial<FullPageLayout> {
+  const positions: Record<
+    string,
+    {
+      component: QuartzComponent
+      priority: number
+      group?: string
+      groupOptions?: PluginLayoutDeclaration["groupOptions"]
+    }[]
+  > = {
+    header: [],
+    left: [],
+    right: [],
+    beforeBody: [],
+    afterBody: [],
+    footer: [],
+  }
+
+  // ============================================================
+  // PLUGIN LAYOUT COMPONENTS
+  // ============================================================
+
+  for (const entry of entries) {
+    if (!entry.layout) continue
+
+    const layout = entry.layout
+    const name = extractPluginName(entry.source)
+
+    // Look up component from registry
+    const registered =
+      componentRegistry.get(name) ??
+      componentRegistry.get(
+        `${formatSourceDisplay(entry.source)}/${name}`,
+      )
+
+    if (!registered) {
+      const pascalName = name
+        .split("-")
+        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+        .join("")
+
+      const altRegistered = componentRegistry.get(pascalName)
+
+      if (!altRegistered) continue
+    }
+
+    const reg =
+      registered ??
+      componentRegistry.get(
+        name
+          .split("-")
+          .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+          .join(""),
+      )
+
+    if (!reg) continue
+
+    let component: QuartzComponent
+
+    if (
+      typeof reg.component === "function" &&
+      !("displayName" in reg.component)
+    ) {
+      const tsOverrides = componentRegistry.getOptionOverrides(name)
+      const opts = {
+        ...entry.options,
+        ...tsOverrides,
+      }
+
+      const optsArg =
+        Object.keys(opts).length > 0 ? opts : undefined
+
+      component = componentRegistry.instantiate(
+        reg.component as QuartzComponentConstructor,
+        optsArg,
+      )
+    } else {
+      component = reg.component as QuartzComponent
+    }
+
+    // Apply display modifier
+    if (layout.display && layout.display !== "all") {
+      component = applyDisplayWrapper(
+        component,
+        layout.display,
+      )
+    }
+
+    // Apply condition
+    if (layout.condition) {
+      component = applyConditionWrapper(
+        component,
+        layout.condition,
+      )
+    }
+
+    const posArray = positions[layout.position]
+
+    if (posArray) {
+      posArray.push({
+        component,
+        priority: layout.priority,
+        group: layout.group,
+        groupOptions: layout.groupOptions,
+      })
+    }
+  }
+
+  // ============================================================
+  // LOCAL LAYOUT COMPONENTS
+  // ============================================================
+
+  for (const local of layoutConfig.local ?? []) {
+    const reg = componentRegistry.get(local.component)
+
+    if (!reg) {
+      console.warn(
+        styleText("yellow", `⚠`) +
+          ` Local layout component "${local.component}" is not registered. Skipping.`,
+      )
+      continue
+    }
+
+    let component: QuartzComponent
+
+    if (
+      typeof reg.component === "function" &&
+      !("displayName" in reg.component)
+    ) {
+      component = componentRegistry.instantiate(
+        reg.component as QuartzComponentConstructor,
+      )
+    } else {
+      component = reg.component as QuartzComponent
+    }
+
+    // Apply display modifier
+    if (local.display && local.display !== "all") {
+      component = applyDisplayWrapper(
+        component,
+        local.display,
+      )
+    }
+
+    // Apply condition
+    if (local.condition) {
+      component = applyConditionWrapper(
+        component,
+        local.condition,
+      )
+    }
+
+    const posArray = positions[local.position]
+
+    if (posArray) {
+      posArray.push({
+        component,
+        priority: local.priority,
+        group: local.group,
+        groupOptions: local.groupOptions,
+      })
+    }
+  }
+
+  // ============================================================
+  // COMPONENTS WITH MANIFEST DEFAULT POSITIONS
+  // ============================================================
+
+  for (const entry of entries) {
+    if (!entry.enabled || entry.layout) continue
+
+    const name = extractPluginName(entry.source)
+
+    const registered =
+      componentRegistry.get(name) ??
+      componentRegistry.get(
+        `${formatSourceDisplay(entry.source)}/${name}`,
+      )
+
+    const pascalName = name
+      .split("-")
+      .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+      .join("")
+
+    const reg = registered ?? componentRegistry.get(pascalName)
+
+    if (!reg) continue
+
+    const layoutDefaults = reg.manifest
+    const defaultPosition = layoutDefaults?.defaultPosition
+
+    if (!defaultPosition) continue
+
+    const posArray = positions[defaultPosition]
+
+    if (!posArray) {
+      continue
+    }
+
+    let component: QuartzComponent
+
+    if (
+      typeof reg.component === "function" &&
+      !("displayName" in reg.component)
+    ) {
+      const tsOverrides = componentRegistry.getOptionOverrides(name)
+
+      const opts = {
+        ...entry.options,
+        ...tsOverrides,
+      }
+
+      const optsArg =
+        Object.keys(opts).length > 0 ? opts : undefined
+
+      component = componentRegistry.instantiate(
+        reg.component as QuartzComponentConstructor,
+        optsArg,
+      )
+    } else {
+      component = reg.component as QuartzComponent
+    }
+
+    posArray.push({
+      component,
+      priority: layoutDefaults?.defaultPriority ?? 50,
+    })
+  }
+
+  // ============================================================
+  // SORT + RESOLVE GROUPS
+  // ============================================================
+
+  const result: Partial<FullPageLayout> = {}
+
+  for (const [position, items] of Object.entries(positions)) {
+    items.sort((a, b) => a.priority - b.priority)
+
+    const resolved = resolveGroups(
+      items,
+      layoutConfig.groups ?? {},
+    )
+
+    const key = position as keyof Pick<
+      FullPageLayout,
+      "header" | "left" | "right" | "beforeBody" | "afterBody" | "footer"
+    >
+
+    ;(result as Record<string, QuartzComponent[]>)[key] = resolved
+  }
+
+  return result
+}
+
+/** @internal Exported for testing only. */
+export function resolveGroups(
+  items: {
+    component: QuartzComponent
+    priority: number
+    group?: string
+    groupOptions?: PluginLayoutDeclaration["groupOptions"]
+  }[],
+  groups: Record<string, FlexGroupConfig>,
+): QuartzComponent[] {
+  // Collect grouped components and track effective priority
+  const groupedComponents = new Map<
+    string,
+    {
+      component: QuartzComponent
+      groupOptions?: PluginLayoutDeclaration["groupOptions"]
+    }[]
+  >()
+
+  const groupPriority = new Map<string, number>()
+
+  for (const item of items) {
+    if (item.group) {
+      if (!groupedComponents.has(item.group)) {
+        groupedComponents.set(item.group, [])
+
+        const groupConfig = groups[item.group]
+
+        groupPriority.set(
+          item.group,
+          groupConfig?.priority ?? item.priority,
+        )
+      }
+
+      const groupMembers = groupedComponents.get(item.group)
+
+      if (groupMembers) {
+        groupMembers.push({
+          component: item.component,
+          groupOptions: item.groupOptions,
+        })
+      }
+    }
+  }
+
+  type RenderEntry = {
+    priority: number
+    component: QuartzComponent
+  }
+
+  const entries: RenderEntry[] = []
+  const processedGroups = new Set<string>()
+
+  for (const item of items) {
+    if (item.group) {
+      if (processedGroups.has(item.group)) continue
+
+      processedGroups.add(item.group)
+
+      const members = groupedComponents.get(item.group)
+
+      if (!members) continue
+
+      const groupConfig = groups[item.group] ?? {}
+
+      const flexComponents = members.map((m) => ({
+        Component: m.component,
+        grow: m.groupOptions?.grow,
+        shrink: m.groupOptions?.shrink,
+        basis: m.groupOptions?.basis,
+        order: m.groupOptions?.order,
+        align: m.groupOptions?.align,
+        justify: m.groupOptions?.justify,
+      }))
+
+      const flexComponent = Flex({
+        components: flexComponents,
+        direction: groupConfig.direction ?? "row",
+        wrap: groupConfig.wrap,
+        gap: groupConfig.gap ?? "1rem",
+      }) as QuartzComponent
+
+      entries.push({
+        priority: groupPriority.get(item.group) ?? 50,
+        component: flexComponent,
+      })
+    } else {
+      entries.push({
+        priority: item.priority,
+        component: item.component,
+      })
+    }
+  }
+
+  entries.sort((a, b) => a.priority - b.priority)
+
+  return entries.map((e) => e.component)
+}
+
+function applyDisplayWrapper(
+  component: QuartzComponent,
+  display: "mobile-only" | "desktop-only",
+): QuartzComponent {
+  if (display === "mobile-only") {
+    return MobileOnly(component) as QuartzComponent
+  }
+
+  return DesktopOnly(component) as QuartzComponent
+}
+
+function applyConditionWrapper(
+  component: QuartzComponent,
+  conditionName: string,
+): QuartzComponent {
+  const predicate = getCondition(conditionName)
+
+  if (!predicate) {
+    console.warn(
+      styleText("yellow", `⚠`) +
+        ` Unknown condition "${conditionName}". Component will always render.`,
+    )
+
+    return component
+  }
+
+  return ConditionalRender({
+    component,
+    condition: predicate,
+  }) as QuartzComponent
 }
