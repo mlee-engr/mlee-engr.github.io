@@ -1,0 +1,47 @@
+ul > li:not(:last-child) {
+  margin-bottom: 6px;
+}
+
+// work experience and resume points formatting
+
+.experience-header {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  column-gap: 0px;
+  align-items: start;
+}
+
+.experience-header .small-logo {
+  grid-column: 1;
+}
+
+.experience-company {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.experience-company strong {
+  display: block;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.experience-company span {
+  display: block;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.experience-meta {
+  grid-column: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  text-align: right;
+  white-space: nowrap;
+}
