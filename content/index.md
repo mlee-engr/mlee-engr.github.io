@@ -1,6 +1,8 @@
 ---
 title: Michael Lee's Portfolio
 ---
+> [!warning] Work in Progress
+> This site is still a work in progress, but I decided to publish it as I build. The engineering process is rarely as clean as the finished product a consumer sees.
 ___
 # About me
 Mechanical Engineering graduate from Northwestern University and incoming M.S. Mechanical Engineering student at Colorado School of Mines (Fall 2027). Originally, I was admitted to Mines for the Fall 2026 term, but I decided to formally defer my offer to focus on gaining real-world engineering experience and to save up for grad school expenses.

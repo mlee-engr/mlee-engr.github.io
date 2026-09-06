@@ -3,28 +3,25 @@ import {
   loadQuartzLayout,
 } from "./quartz/plugins/loader/config-loader"
 
-import PdfViewer from "./quartz/components/PdfViewer"
 import { componentRegistry } from "./quartz/components/registry"
 
-const config = await loadQuartzConfig()
+import ProfileSidebar from "./quartz/components/profileSidebar"
+import PdfViewer from "./quartz/components/PdfViewer"
 
-export default config
+componentRegistry.register(
+  "ProfileSidebar",
+  ProfileSidebar,
+  "local",
+)
 
-// Register the component so Quartz collects its CSS and client-side resources.
 componentRegistry.register(
   "PdfViewer",
   PdfViewer,
   "local",
 )
 
-const layout = await loadQuartzLayout()
+const config = await loadQuartzConfig()
 
-layout.byPageType.content = {
-  ...layout.byPageType.content,
-  afterBody: [
-    ...(layout.byPageType.content?.afterBody ?? []),
-    componentRegistry.instantiate(PdfViewer),
-  ],
-}
+export default config
 
-export { layout }
+export const layout = await loadQuartzLayout()

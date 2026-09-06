@@ -1,8 +1,28 @@
+
 @use "./variables.scss" as *;
+
+@use "./smallLogo";
+
+@use "./experience";
 
 // put your custom CSS here!
 
+/* ==========================================================================
+   Profile Sidebar - Extend Left-Side Working Area
+   ========================================================================== */
 
-@use "./smallLogo"; // custom small logo box :D
-@use "./experience"; // larger spacing between bullet points 
+/*
+   Quartz's left sidebar has 2rem of padding on both sides.
+
+   Remove the left padding so the sidebar has additional usable space
+   on the left, while adding the same amount of right padding so the
+   profile text remains in its original horizontal position.
+*/
+
+@media screen and (min-width: 1024px) {
+  & .sidebar.left {
+    padding-left: 0;
+    padding-right: 0rem;
+  }
+}
 

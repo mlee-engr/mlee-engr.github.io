@@ -34,7 +34,8 @@ As the final project of our Machine Elements Design course, I designed 1 shaft i
 # Calculations and detailed analysis
 
 TBD note to self: add calculations, equations, gear and bearing drawings, and calculations for gear selection.
-
+> [!note] Note to self
+> TBD:  add calculations, equations, gear and bearing drawings, and calculations for gear selection.
 
 # Results & Reflections
 
