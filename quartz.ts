@@ -8,6 +8,7 @@ import { componentRegistry } from "./quartz/components/registry"
 import ProfileSidebar from "./quartz/components/profileSidebar"
 import PdfViewer from "./quartz/components/PdfViewer"
 import pageNavigation from "./quartz/components/pageNavigation"
+import CustomExplorer from "./quartz/components/customExplorer"
 
 componentRegistry.register(
   "ProfileSidebar",
@@ -24,6 +25,12 @@ componentRegistry.register(
 componentRegistry.register(
   "PageNavigation",
   pageNavigation,
+  "local",
+)
+
+componentRegistry.register(
+  "CustomExplorer",
+  CustomExplorer,
   "local",
 )
 

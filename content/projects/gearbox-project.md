@@ -2,6 +2,9 @@
 title: Gear Reducer Transmission System
 ---
 ___
+
+> [!warning] Important Note
+> This page is very much a work in progress. There are lots of missing explanations and analyses/results. I am working on finishing it ASAP!
 # 1. Background
 As the final project of our Machine Elements Design course, I designed 1 shaft in a 3-shaft gear reducer, incorporating everything learned from the class about shafts, gears, bearings, contact/bending stresses, and fatigue/static yield failure. I also produced detailed CAD models & drawings of gears, bearings, and my designed shaft in Siemens NX and collaborated with two teammates to integrate them into one large assembly model.
 

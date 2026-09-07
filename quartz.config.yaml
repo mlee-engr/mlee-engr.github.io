@@ -1,20 +1,17 @@
+# yaml-language-server: $schema=./quartz/plugins/quartz-plugins.schema.json
 configuration:
   pageTitle: Michael Lee's Portfolio
   pageTitleSuffix: ""
   enableSPA: true
   enablePopovers: true
-
   analytics:
     provider: plausible
-
   locale: en-US
   baseUrl: mlee-engr.github.io
-
   ignorePatterns:
     - private
     - templates
     - .obsidian
-
   theme:
     colors:
       lightMode:
@@ -27,7 +24,6 @@ configuration:
         tertiary: "#84a59d"
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#fff23688"
-
       darkMode:
         light: "#161618"
         lightgray: "#393639"
@@ -38,18 +34,12 @@ configuration:
         tertiary: "#84a59d"
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#b3aa0288"
-
-    # Quartz core requires this typography configuration.
-    # The Fonts plugin below controls font loading and font-family overrides.
     typography:
       title: DM Sans
       header: DM Sans
       body: DM Sans
       code: IBM Plex Mono
-
-
 plugins:
-
   - source: "@quartz-community/created-modified-date"
     enabled: true
     options:
@@ -59,8 +49,6 @@ plugins:
         - git
         - filesystem
     order: 10
-
-
   - source: "@quartz-community/syntax-highlighting"
     enabled: true
     options:
@@ -69,8 +57,6 @@ plugins:
         dark: github-dark
       keepBackground: false
     order: 20
-
-
   - source: "@quartz-community/obsidian-flavored-markdown"
     enabled: true
     options:
@@ -87,69 +73,50 @@ plugins:
       enableVideoEmbed: true
       enableCheckbox: true
     order: 30
-
-
   - source: "@quartz-community/github-flavored-markdown"
     enabled: true
     order: 40
-
-
   - source: "@quartz-community/table-of-contents"
     enabled: true
     order: 50
+    options:
+      maxDepth: 6
+      minEntries: 1
+      showByDefault: true
+      headingStyle: "nested"  # Add this to force nested lists
     layout:
       position: right
-      priority: 60
-
-
+      priority: 40  # TOC at the bottom
   - source: "@quartz-community/crawl-links"
     enabled: true
     options:
       markdownLinkResolution: shortest
     order: 60
-
-
   - source: "@quartz-community/description"
     enabled: true
     order: 70
-
-
   - source: "@quartz-community/latex"
     enabled: true
     options:
       renderEngine: katex
     order: 80
-
-
   - source: "@quartz-community/citations"
     enabled: false
     order: 85
-
-
   - source: "@quartz-community/hard-line-breaks"
     enabled: true
     order: 90
-
-
   - source: "@quartz-community/ox-hugo"
     enabled: false
     order: 91
-
-
   - source: "@quartz-community/roam"
     enabled: false
     order: 92
-
-
-  # Quartz Themes
   - source: "@quartz-themes/core"
     enabled: true
     options:
       theme: obsidian
       mode: both
-
-
-  # Fonts
   - source: github:quartz-community/fonts
     enabled: true
     options:
@@ -159,22 +126,14 @@ plugins:
       header: DM Sans
       code: IBM Plex Mono
     order: 60
-
-
   - source: "@quartz-community/remove-draft"
     enabled: true
-
-
   - source: "@quartz-community/explicit-publish"
     enabled: false
-
-
   - source: "@quartz-community/unlisted-pages"
     enabled: true
     options: {}
     order: 45
-
-
   - source: "@quartz-community/encrypted-pages"
     enabled: true
     options:
@@ -182,138 +141,87 @@ plugins:
       passwordField: password
       unlistWhenEncrypted: false
       outputPath: static/encryptedContentIndex.json
-
-
   - source: "@quartz-community/stacked-pages"
     enabled: false
     layout:
       position: afterBody
       priority: 50
       display: all
-
-
   - source: "@quartz-community/alias-redirects"
     enabled: true
-
-
   - source: "@quartz-community/content-index"
     enabled: true
     options:
       enableSiteMap: true
       enableRSS: true
-
-
   - source: "@quartz-community/favicon"
     enabled: true
-
-
   - source: "@quartz-community/og-image"
     enabled: true
-
-
   - source: "@quartz-community/cname"
     enabled: true
-
-
   - source: "@quartz-community/canvas-page"
     enabled: true
-
-
   - source: "@quartz-community/content-page"
     enabled: true
-
-
   - source: "@quartz-community/folder-page"
     enabled: true
-
-
   - source: "@quartz-community/tag-page"
     enabled: true
-
-
-  - source: "@quartz-community/explorer"
-    enabled: true
-    layout:
-      position: right
-      priority: 50
-
-
   - source: "@quartz-community/graph"
     enabled: false
     layout:
       position: right
       priority: 10
-
-
   - source: "@quartz-community/search"
     enabled: true
     layout:
       position: right
-      priority: 20
-      group: toolbar
-      groupOptions:
-        grow: true
-
-
+      priority: 20  # Search below page-title
+      group: toolbar  # Add to toolbar group
   - source: "@quartz-community/backlinks"
     enabled: false
     layout:
       position: right
       priority: 50
-
-
   - source: "@quartz-community/article-title"
     enabled: true
     layout:
       position: beforeBody
       priority: 10
-
-
   - source: "@quartz-community/content-meta"
     enabled: true
     layout:
       position: beforeBody
       priority: 20
-
-
   - source: "@quartz-community/tag-list"
     enabled: false
     layout:
       position: beforeBody
       priority: 30
-
-
   - source: "@quartz-community/page-title"
     enabled: true
     layout:
       position: right
-      priority: 10
-
-
+      priority: 10  # Page title at very top
   - source: "@quartz-community/darkmode"
     enabled: true
     layout:
       position: right
-      priority: 30
-      group: toolbar
-
-
+      priority: 21  # Right after search (slightly lower priority)
+      group: toolbar  # In toolbar with search
   - source: "@quartz-community/reader-mode"
     enabled: true
     layout:
       position: right
-      priority: 35
-      group: toolbar
-
-
+      priority: 22  # Right after darkmode
+      group: toolbar  # In toolbar with search and darkmode
   - source: "@quartz-community/breadcrumbs"
     enabled: true
     layout:
       position: beforeBody
       priority: 5
       condition: not-index
-
-
   - source: "@quartz-community/comments"
     enabled: false
     options:
@@ -322,8 +230,6 @@ plugins:
     layout:
       position: afterBody
       priority: 10
-
-
   - source: "@quartz-community/footer"
     enabled: true
     options:
@@ -333,12 +239,8 @@ plugins:
     layout:
       position: footer
       priority: 50
-
-
   - source: "@quartz-community/recent-notes"
     enabled: false
-
-
   - source: "@quartz-community/spacer"
     enabled: true
     options: {}
@@ -347,14 +249,10 @@ plugins:
       position: left
       priority: 25
       display: mobile-only
-
-
   - source: "@quartz-community/bases-page"
     enabled: true
     options: {}
     order: 50
-
-
   - source: "@quartz-community/note-properties"
     enabled: true
     options:
@@ -365,57 +263,46 @@ plugins:
         - aliases
       excludedProperties: []
       hidePropertiesView: false
-      delimiters: ---
+      delimitings: ---
       language: yaml
     order: 5
     layout:
       position: beforeBody
       priority: 15
       display: all
-
-
   - source: "@quartz-community/obsidian-plugin-excalidraw"
     enabled: true
     options:
       enableInteraction: true
       darkMode: auto
       exportPadding: 20
-
 layout:
   local:
+    - component: CustomExplorer
+      position: right
+      priority: 30  # Explorer below search/darkmode/reader
     - component: ProfileSidebar
       position: left
       priority: 10
-
-    - component: PageNavigation
-      position: beforeBody
-      priority: 40
-
   groups:
     toolbar:
-      priority: 35
+      priority: 15  # Toolbar group appears below page-title but above explorer
       direction: row
       gap: 0.5rem
-
   byPageType:
     "404":
       positions:
         beforeBody: []
         left: []
         right: []
-
     content: {}
-
     folder:
       exclude:
         - reader-mode
-
     tag:
       exclude:
         - reader-mode
       positions:
         right: []
-
     canvas: {}
-
     bases: {}

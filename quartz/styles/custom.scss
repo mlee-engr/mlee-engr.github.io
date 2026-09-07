@@ -7,6 +7,12 @@
 // put your custom CSS here!
 
 /* ==========================================================================
+   Import Table of Contents Styles
+   ========================================================================== */
+
+@use "../components/styles/customTOC";  // Updated path
+
+/* ==========================================================================
    Profile Sidebar - Extend Left-Side Working Area
    ========================================================================== */
 
@@ -132,4 +138,17 @@ pre code,
 kbd,
 samp {
   font-family: "IBM Plex Mono", "Courier New", monospace !important;
+}
+
+/* ==========================================================================
+   Additional TOC Overrides (if needed)
+   ========================================================================== */
+
+/* If you want to adjust the TOC font to match your Calibri theme */
+.toc {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+}
+
+.toc a {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
 }

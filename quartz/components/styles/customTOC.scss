@@ -1,0 +1,183 @@
+/* customTOC.scss - Table of Contents Styling */
+
+.toc {
+  padding: 0.5rem 0;
+  font-family: var(--bodyFont);
+  font-size: 0.9rem;
+}
+
+.toc-container {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.5rem 0;
+}
+
+/* Main TOC heading */
+.toc h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gray);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  padding: 0 0.5rem;
+}
+
+/* TOC list container - IMPORTANT for indentation */
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Nested lists for indentation - this creates the hierarchy */
+.toc ul ul {
+  padding-left: 1.2rem !important;
+  margin: 0.1rem 0;
+}
+
+.toc ul ul ul {
+  padding-left: 1.2rem !important;
+}
+
+.toc ul ul ul ul {
+  padding-left: 1.2rem !important;
+}
+
+/* Each TOC item */
+.toc li {
+  margin: 0.1rem 0;
+  line-height: 1.4;
+  padding: 0;
+}
+
+/* TOC links */
+.toc a {
+  display: block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: var(--darkgray);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease;
+  font-weight: 400;
+}
+
+.toc a:hover {
+  background: rgba(127, 127, 127, 0.12);
+  color: var(--secondary);
+}
+
+.toc a:active {
+  background: rgba(127, 127, 127, 0.18);
+}
+
+/* Heading level styles with padding */
+.toc .toc-h1 a {
+  font-weight: 600;
+  font-size: 1em;
+  padding-left: 8px;
+}
+
+.toc .toc-h2 a {
+  font-weight: 500;
+  font-size: 0.95em;
+  padding-left: 12px;
+}
+
+.toc .toc-h3 a {
+  font-weight: 400;
+  font-size: 0.9em;
+  padding-left: 20px;
+  opacity: 0.9;
+}
+
+.toc .toc-h4 a {
+  font-weight: 400;
+  font-size: 0.85em;
+  padding-left: 28px;
+  opacity: 0.85;
+}
+
+.toc .toc-h5 a {
+  font-weight: 400;
+  font-size: 0.8em;
+  padding-left: 36px;
+  opacity: 0.8;
+}
+
+.toc .toc-h6 a {
+  font-weight: 400;
+  font-size: 0.75em;
+  padding-left: 44px;
+  opacity: 0.75;
+}
+
+/* Active heading */
+.toc .toc-active a {
+  color: var(--secondary);
+  font-weight: 600;
+  background: rgba(127, 127, 127, 0.08);
+}
+
+.toc .toc-active a:hover {
+  background: rgba(127, 127, 127, 0.16);
+}
+
+/* Scrollable TOC */
+.toc-scrollable {
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.toc-scrollable::-webkit-scrollbar {
+  width: 4px;
+}
+
+.toc-scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.toc-scrollable::-webkit-scrollbar-thumb {
+  background: var(--gray);
+  border-radius: 2px;
+}
+
+.toc-scrollable::-webkit-scrollbar-thumb:hover {
+  background: var(--darkgray);
+}
+
+/* Mobile responsive */
+@media screen and (max-width: 1023px) {
+  .toc {
+    font-size: 0.85rem;
+  }
+  
+  .toc .toc-h2 a {
+    padding-left: 10px;
+  }
+  
+  .toc .toc-h3 a {
+    padding-left: 16px;
+  }
+  
+  .toc .toc-h4 a {
+    padding-left: 22px;
+  }
+  
+  .toc-scrollable {
+    max-height: calc(100vh - 150px);
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .toc a {
+    color: var(--darkgray);
+  }
+  
+  .toc .toc-active a {
+    color: var(--secondary);
+  }
+}
