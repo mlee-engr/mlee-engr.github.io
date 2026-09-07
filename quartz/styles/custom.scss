@@ -1,4 +1,3 @@
-
 @use "./variables.scss" as *;
 
 @use "./smallLogo";
@@ -6,6 +5,7 @@
 @use "./experience";
 
 // put your custom CSS here!
+
 
 /* ==========================================================================
    Profile Sidebar - Extend Left-Side Working Area
@@ -15,8 +15,8 @@
    Quartz's left sidebar has 2rem of padding on both sides.
 
    Remove the left padding so the sidebar has additional usable space
-   on the left, while adding the same amount of right padding so the
-   profile text remains in its original horizontal position.
+   on the left, while keeping the profile content position controlled
+   separately by its own component styling.
 */
 
 @media screen and (min-width: 1024px) {
@@ -26,3 +26,121 @@
   }
 }
 
+
+/* ==========================================================================
+   Calibri Font
+   ========================================================================== */
+
+@font-face {
+  font-family: "Calibri";
+  src: url("/static/fonts/calibri-regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Calibri";
+  src: url("/static/fonts/calibri-bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Calibri";
+  src: url("/static/fonts/calibri-italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Calibri";
+  src: url("/static/fonts/calibri-bold-italic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+
+/* ==========================================================================
+   Global Font Variables
+   ========================================================================== */
+
+:root {
+  --bodyFont: "Calibri", "DM Sans", Arial, sans-serif !important;
+  --headerFont: "Calibri", "DM Sans", Arial, sans-serif !important;
+  --titleFont: "Calibri", "DM Sans", Arial, sans-serif !important;
+  --codeFont: "IBM Plex Mono", "Courier New", monospace !important;
+}
+
+
+/* ==========================================================================
+   Main Content Font Override
+   ========================================================================== */
+
+body {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+}
+
+main {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+}
+
+article {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+}
+
+
+/* ==========================================================================
+   Body Text
+   ========================================================================== */
+
+p,
+li,
+ul,
+ol,
+blockquote,
+table,
+td,
+th,
+label {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+}
+
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+a {
+  font-family: inherit;
+}
+
+
+/* ==========================================================================
+   Headings
+   ========================================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+}
+
+
+/* ==========================================================================
+   Code
+   ========================================================================== */
+
+code,
+pre,
+pre code,
+kbd,
+samp {
+  font-family: "IBM Plex Mono", "Courier New", monospace !important;
+}
