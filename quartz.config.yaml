@@ -380,14 +380,16 @@ plugins:
       enableInteraction: true
       darkMode: auto
       exportPadding: 20
-    order: 50
-
 
 layout:
   local:
     - component: ProfileSidebar
       position: left
       priority: 10
+
+    - component: PageNavigation
+      position: beforeBody
+      priority: 40
 
   groups:
     toolbar:
@@ -396,7 +398,6 @@ layout:
       gap: 0.5rem
 
   byPageType:
-
     "404":
       positions:
         beforeBody: []

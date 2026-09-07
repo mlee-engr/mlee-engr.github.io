@@ -1,0 +1,89 @@
+.explorer {
+  font-family: var(--bodyFont);
+  font-size: 0.95rem;
+}
+
+.explorer .title-button {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.explorer-content {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+.explorer-ul {
+  margin: 0;
+  padding: 0;
+}
+
+.explorer .nav-file-title,
+.explorer .folder-container {
+  min-height: 24px;
+  margin: 0;
+  padding: 1px 6px;
+  border-radius: 4px;
+  line-height: 1.3;
+}
+
+.explorer .nav-file-title:hover,
+.explorer .folder-container:hover {
+  background: rgba(127, 127, 127, 0.12);
+}
+
+.explorer .nav-file-title {
+  font-weight: 400;
+}
+
+.explorer .folder-button {
+  font-weight: 700;
+  padding: 0;
+}
+
+.explorer .folder-title {
+  font-weight: 700;
+}
+
+.explorer .folder-icon,
+.explorer .nav-file-title::before {
+  margin-right: 0.4rem;
+}
+
+.explorer .tree-item-children {
+  margin-left: 0.75rem;
+  padding-left: 0.5rem;
+}
+
+.explorer .nav-file-title.active {
+  font-weight: 600;
+  background: rgba(127, 127, 127, 0.14);
+}
+
+.explorer .folder-outer {
+  margin: 0;
+  padding: 0;
+}
+
+.explorer ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Hide the automatic folder-page listing */
+.page-listing {
+  display: none !important;
+}
+
+@media screen and (max-width: 1023px) {
+  .explorer {
+    width: 100%;
+  }
+
+  .explorer .nav-file-title,
+  .explorer .folder-container {
+    min-height: 26px;
+    padding: 2px 6px;
+  }
+}

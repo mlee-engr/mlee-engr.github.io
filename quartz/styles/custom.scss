@@ -1,31 +1,26 @@
 @use "./variables.scss" as *;
 
 @use "./smallLogo";
-
 @use "./experience";
+@use "../components/styles/explorer-custom";
 
 // put your custom CSS here!
-
 
 /* ==========================================================================
    Profile Sidebar - Extend Left-Side Working Area
    ========================================================================== */
 
-/*
-   Quartz's left sidebar has 2rem of padding on both sides.
-
-   Remove the left padding so the sidebar has additional usable space
-   on the left, while keeping the profile content position controlled
-   separately by its own component styling.
-*/
-
 @media screen and (min-width: 1024px) {
   & .sidebar.left {
     padding-left: 0;
-    padding-right: 0rem;
+    padding-right: 2rem;
+  }
+
+  & .sidebar.left .author__content,
+  & .sidebar.left .author__urls-wrapper {
+    margin-left: 2rem;
   }
 }
-
 
 /* ==========================================================================
    Calibri Font
@@ -63,7 +58,6 @@
   font-display: swap;
 }
 
-
 /* ==========================================================================
    Global Font Variables
    ========================================================================== */
@@ -74,7 +68,6 @@
   --titleFont: "Calibri", "DM Sans", Arial, sans-serif !important;
   --codeFont: "IBM Plex Mono", "Courier New", monospace !important;
 }
-
 
 /* ==========================================================================
    Main Content Font Override
@@ -92,7 +85,6 @@ article {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
 }
 
-
 /* ==========================================================================
    Body Text
    ========================================================================== */
@@ -109,7 +101,6 @@ label {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
 }
 
-
 /* ==========================================================================
    Links
    ========================================================================== */
@@ -117,7 +108,6 @@ label {
 a {
   font-family: inherit;
 }
-
 
 /* ==========================================================================
    Headings
@@ -131,7 +121,6 @@ h5,
 h6 {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
 }
-
 
 /* ==========================================================================
    Code
