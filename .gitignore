@@ -12,3 +12,7 @@ replit.nix
 .quartz/
 quartz/cli/tui/dist/
 .turbo/
+
+# Windows Zone.Identifier files
+*:Zone.Identifier
+*:Zone.identifier
