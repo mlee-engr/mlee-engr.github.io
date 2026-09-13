@@ -3,7 +3,7 @@ title: My Projects
 ---
 
 > [!warning] Work in Progress
-> This page and its subpages are a work in progress, I will be adding more projects and details to existing ones as soon as possible.
+> More details and projects coming soon!
 
 ___
 <div class="site-preview-card"> 

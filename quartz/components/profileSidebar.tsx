@@ -5,7 +5,7 @@ const profile = {
   avatar: "/static/images/profile.png",
   name: "Michael Lee",
   pronouns: "",
-  bio: "Co-op @ Entegris | Aspiring Aerospace Engineer and lifelong learner",
+  bio: "Co-op @ Entegris | Mechanical Engineer and lifelong learner",
 
   citizenship: "U.S. Citizen",
   location: "Denver, CO",

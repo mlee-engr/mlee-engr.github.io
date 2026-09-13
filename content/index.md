@@ -1,15 +1,26 @@
 ---
 title: Michael Lee's Portfolio
 ---
-> [!warning] Work in Progress
-> This site is still a work in progress, but I decided to publish it as I build. The engineering process is rarely as clean as the finished product a consumer sees.
-___
-# About me
-Mechanical Engineering graduate from Northwestern University and incoming M.S. Mechanical Engineering student at Colorado School of Mines (Fall 2027). Originally, I was admitted to Mines for the Fall 2026 term, but I decided to formally defer my offer to focus on gaining real-world engineering experience and to save up for grad school expenses.
+# About Me
 
-Currently, I am an Engineering Co-op at Entegris, where I work with metrology and quality engineers in the semiconductor manufacturing industry. My long-term goal is to work in aerospace, particularly in propulsion, test, or systems engineering roles.
+B.S. in Mechanical Engineering from [Northwestern University](https://www.mccormick.northwestern.edu/). Incoming M.S. Mechanical Engineering student at [Colorado School of Mines](https://mechanical.mines.edu/grad-program/) — originally admitted for Fall 2026, but I formally deferred to Fall 2027 to gain industry experience, save for grad school, and avoid student loans.
 
-I am actively seeking Spring and Summer 2027 engineering internships in design, manufacturing, and test engineering to familiarize myself with different stages of the product development process (design & prototyping → manufacturing at scale → quality assurance). Please connect with me at [**michael_lee1@mines.edu**](mailto:michael_lee1@mines.edu) or [**mlee-engr@proton.me**](mailto:mlee.engr@proton.me).
+I'm currently an Engineering Co-op at Entegris, working with manufacturing & quality engineers on advanced packaging for semiconductor wafers and chips. Long-term, I hope to work in aerospace — preferably on launch vehicles and spacecraft.
+
+
+# What I'm Looking For
+
+**Spring** and **Summer 2027** internships in **Design, Integration/Testing, and/or Manufacturing**. Rather than specializing early, I'm building my own engineering rotation program by selectively choosing internship types to gain exposure across the product development lifecycle. Connect with me at [michael_lee1@mines.edu](mailto:michael_lee1@mines.edu) or [mlee.engr@proton.me](mailto:mlee.engr@proton.me).
+
+☐ **Design / R&D** — To sharpen CAD modeling, prototyping, and engineering analysis skills
+☐ **Integration / Test** — To develop hands-on work with test plans, data acquisition, and validation
+☐ **Manufacturing** — To gain exposure to production processes and scaling up operations
+✅ **Quality / Metrology** — Ensuring product quality before shipping to customers (Entegris Co-op)
+
+
+# Why Should You Hire Me?
+I want to see designs through each step to its final stage — not just hand off a drawing. My biggest weakness is limited industry experience, but I'm quick to become an expert at anything I put my mind to: I joined Entegris in July knowing nothing about quality or metrology, and by August, I began contributing to high-stakes projects. For me, learning by immersion (**especially speaking with engineers and technicians**) while facing real problems head-on beats studying a textbook front to back any day.
+
 
 <ImageCarousel
   images="/static/images/graduate.png, /static/images/clean_room.png, /static/images/l1-rocket.png, /static/images/vietnam.png"
@@ -18,21 +29,23 @@ I am actively seeking Spring and Summer 2027 engineering internships in design, 
 />
 
 
-# Why should you hire me?
+# My Résumé & Projects
 
-I'm not becoming an engineer because I want to sit behind a screen all day. I love designing things, but I get the most satisfaction from seeing those designs come to life—whether that's through machining, assembly, testing, or troubleshooting. I don't want to just design one piece and hand it off—I want to be involved in the journey of turning an idea into something that actually works.
-
-For me, learning by immersion and actually encountering problems head-on beats studying a textbook front to back any day.
- 
-# My Résumé
-<div style="text-align: center;">
+<div style="text-align: center; font-size: 20px;">
   <a
     href="/static/files/michael_lee_resume.pdf"
     target="_blank"
     rel="noopener"
-    style="background: none; text-decoration: none; font-size: 20px;"
+    style="background: none; text-decoration: none;"
   >
-    <b>Download Resume</b>
+    Download Resume
+  </a>
+  <span style="margin: 0 12px; color: #999;">|</span>
+  <a
+    href="/my-projects/"
+    style="background: none; text-decoration: none;"
+  >
+    View My Projects
   </a>
 </div>
 <br>

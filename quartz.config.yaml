@@ -116,7 +116,7 @@ plugins:
     enabled: true
     options:
       theme: obsidian
-      mode: both
+      mode: light
   - source: github:quartz-community/fonts
     enabled: true
     options:
@@ -205,7 +205,7 @@ plugins:
       position: right
       priority: 10  # Page title at very top
   - source: "@quartz-community/darkmode"
-    enabled: true
+    enabled: false
     layout:
       position: right
       priority: 21  # Right after search (slightly lower priority)
