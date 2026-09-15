@@ -25,8 +25,8 @@ const customExplorerSort = (
   b: FileTrieNode,
 ): number => {
   const topLevelOrder: Record<string, number> = {
-    "my-projects": 0,
-    "work-experience": 1,
+    "projects": 0,
+    "professional-experience": 1,
     "skills-and-certifications": 2,
     "interests-and-hobbies": 3,
     "lifelong-learning": 4,
@@ -69,15 +69,21 @@ const customExplorerSort = (
   )
 }
 
-const customExplorerFilter = (
-  node: FileTrieNode,
-): boolean => {
+// ✅ UPDATED FILTER — shows root folders only, hides sub-folders inside /projects/
+const customExplorerFilter = (node: FileTrieNode): boolean => {
+  const depth = node.slugSegments?.length ?? 0
   const slug = node.slugSegments?.join("/") ?? ""
 
-  return (
-    node.slugSegment !== "tags" &&
-    !(node.isFolder && slug === "projects")
-  )
+  // Hide the tags folder
+  if (node.slugSegment === "tags") return false
+
+  // Hide everything inside /projects/ (keeps the folder itself)
+  if (depth >= 2 && slug.startsWith("projects/")) return false
+
+  // Hide any other nested folder
+  if (node.isFolder && depth > 1) return false
+
+  return true
 }
 
 const defaultOptions = {

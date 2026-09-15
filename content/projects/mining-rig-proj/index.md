@@ -1,5 +1,5 @@
 ---
-title: Cryptocurrency (ETH) Mining Rig
+title: 4. Cryptocurrency (ETH) Mining Rig
 ---
 ___
 # Background

@@ -152,3 +152,107 @@ samp {
 .toc a {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
 }
+
+
+
+/* Force larger explorer text */
+.explorer-content ul li > a,
+.explorer .folder-container div > a,
+.explorer .folder-container div > button span {
+  font-size: 1.5rem !important;
+  line-height: 1.15 !important;
+}
+
+/* ==========================================================================
+   Table of Contents — Larger Font Size
+   ========================================================================== */
+
+/* TOC heading button (the "Table of Contents" title) */
+button#toc h3,
+button.toc-header h3,
+.toc-header h3 {
+  font-size: 1.1rem !important;
+  line-height: 1.15 !important;
+}
+
+/* TOC content links (the individual headings) */
+#toc-content a,
+.toc-content a,
+.toc ul li a,
+.toc > ul > li > a {
+  font-size: 1.1rem !important;
+  line-height: 1.15 !important;
+}
+
+/* Nested TOC items (subheadings) */
+.toc ul ul li a,
+#toc-content ul ul li a {
+  font-size: 1rem !important;
+  line-height: 1.15 !important;
+}
+
+/* TOC fold icon */
+button#toc .fold,
+.toc .fold {
+  width: 1.1rem !important;
+  height: 1.15rem !important;
+}
+
+/* Custom formatting to adjust center width*/ 
+
+
+
+// @media (min-width: 1200px) {
+//   .page {
+//     min-width: 0 !important;
+//     max-width: 100% !important;
+//     width: 100% !important;
+//     padding-left: 1rem !important;
+//     padding-right: 1rem !important;
+//   }
+  
+//   .page > #quartz-body {
+//     min-width: 0 !important;
+//     max-width: 100% !important;
+//     width: 100% !important;
+//     grid-template-columns: 
+//       minmax(240px, 320px) 
+//       minmax(0, 800px) 
+//       minmax(240px, 320px) !important;
+//     column-gap: 2rem !important;
+//     justify-content: center !important;
+//     background-color: var(--lightgray) !important;
+//   }
+  
+//   .page > #quartz-body .sidebar {
+//     min-width: 0 !important;
+//     max-width: none !important;
+//     width: 100% !important;
+//     overflow: visible !important;
+//     background-color: transparent !important;
+//   }
+  
+//   /* ✅ FIX: Negative margin + padding to cover the gap */
+//   .page > #quartz-body .center,
+//   .page > #quartz-body footer {
+//     min-width: 0 !important;
+//     max-width: 100% !important;
+//     width: auto !important;
+//     margin-left: -2rem !important;    /* equal to column-gap */
+//     margin-right: -2rem !important;   /* equal to column-gap */
+//     padding-left: 2rem !important;    /* restores inner spacing */
+//     padding-right: 2rem !important;
+//     background-color: var(--light) !important;
+//   }
+  
+//   .page > #quartz-body .center .image-carousel,
+//   .page > #quartz-body .center .pdf-viewer {
+//     max-width: 100% !important;
+//     min-width: 0 !important;
+//   }
+  
+//   .page > #quartz-body .center img {
+//     max-width: 100% !important;
+//     height: auto !important;
+//   }
+// }

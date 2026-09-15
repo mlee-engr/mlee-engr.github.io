@@ -20,7 +20,7 @@ ___
 </div>
 
 
-● Design and fabricate test fixtures using SolidWorks CAD and 3D printing to improve measurement repeatability; interpret CADdrawings with GD&T to develop and qualify CMM programs for tight-tolerance parts used in semiconductor packaging
+● Design and fabricate test fixtures using SolidWorks CAD and 3D printing to improve measurement repeatability; interpret CAD drawings with GD&T to develop and qualify CMM programs for tight-tolerance parts used in semiconductor packaging
 
 ● Automate measurement data analysis using Python (pandas) to parse and format spreadsheet data for Minitab statisticalanalysis, enabling quicker assessment of CMM program and process stability
 
@@ -31,3 +31,4 @@ ___
 ● Improve inspection workflows by incorporating feedback from quality inspectors and metrology technicians closest to the end product; perform FMEA on proposed process changes and document in Management of Change (MOC) system
 
 **Click [here]("/metrology-projects") to see a list of projects that I am working on during my time at Entegris.**
+

@@ -234,7 +234,39 @@ function renderTree(
   const simplifiedCurrentSlug =
     simplifySlug(currentSlug);
 
-  if (node.isFolder) {
+  // ✅ KEY FIX: Treat `projects` as a file-like entry (no dropdown)
+  const isFileLike = !node.isFolder || node.slugSegment === "projects";
+
+  if (isFileLike && node.data) {
+    const clone =
+      fileTemplate.content.cloneNode(true);
+
+    const link =
+      clone.querySelector("a");
+
+    if (link) {
+      link.href =
+        resolveBasePath(
+          node.data.slug
+        );
+
+      link.textContent =
+        node.displayName ||
+        node.slugSegment;
+
+      if (
+        node.data.slug ===
+        currentSlug
+      ) {
+        link.classList.add(
+          "active",
+          "is-active"
+        );
+      }
+    }
+
+    container.appendChild(clone);
+  } else if (node.isFolder) {
     const clone =
       folderTemplate.content.cloneNode(true);
 

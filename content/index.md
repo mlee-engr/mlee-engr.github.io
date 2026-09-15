@@ -42,7 +42,7 @@ I want to see designs through each step to its final stage — not just hand off
   </a>
   <span style="margin: 0 12px; color: #999;">|</span>
   <a
-    href="/my-projects/"
+    href="./projects/A"
     style="background: none; text-decoration: none;"
   >
     View My Projects

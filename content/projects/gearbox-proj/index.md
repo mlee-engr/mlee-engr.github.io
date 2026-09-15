@@ -1,5 +1,5 @@
 ---
-title: Gear Reducer Transmission System
+title: 2. Gear Reducer Transmission System
 ---
 ___
 

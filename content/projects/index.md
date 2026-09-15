@@ -4,6 +4,7 @@ title: My Projects
 
 > [!warning] Work in Progress
 > More details and projects coming soon!
+
 ___
 <div class="site-preview-card">
   <img src="/static/images/rocket-nozzle.png" alt="Liquid rocket" style="height: 600px">
@@ -12,8 +13,9 @@ ___
 
   <p>Designing and analyzing a 250lbf amateur liquid rocket engine to learn about fluid systems and expand on propulsion knowledge.</p>
 
-  <a href="/projects/liquid-rocket-engine">View Project →</a>
+  <a href="/projects/rocket-proj/index">View Project →</a>
 </div>
+
 ___
 <div class="site-preview-card"> 
   <img src="/static/images/cmm.png" alt="CMM machine" style="height: 400px"> 
@@ -22,7 +24,7 @@ ___
  
   <p>A collection of projects being worked on at my Engineering Co-op at Entegris: from automating data analysis with Python to designing CMM test fixtures to improve measurement repeatability.</p> 
  
-  <a href="/projects/metrology-projects">View Project →</a> 
+  <a href="/projects/metrology-proj/index">View Project →</a> 
 </div> 
 
 ___
@@ -33,7 +35,7 @@ ___
 
   <p>Gear reducer project involving shaft design, fatigue/yield analysis, bearing/gear selection and producing detailed CAD models and drawings in Siemens NX.</p>
 
-  <a href="/projects/gearbox-project">View Project →</a>
+  <a href="/projects/gearbox-proj/index">View Project →</a>
 </div>
 
 ___
@@ -44,7 +46,7 @@ ___
 
   <p>An ethereum mining rig that generated over $2,500 in profits during the 2021 GPU mining boom.</p>
 
-  <a href="/projects/mining-rig-project">View Project →</a>
+  <a href="/projects/mining-rig-proj/index">View Project →</a>
 </div>
 
 <!-- ___
