@@ -4,7 +4,16 @@ title: My Projects
 
 > [!warning] Work in Progress
 > More details and projects coming soon!
+___
+<div class="site-preview-card">
+  <img src="/static/images/rocket-nozzle.png" alt="Liquid rocket" style="height: 600px">
 
+  <h2>Liquid Rocket Engine - Work in Progress :)</h2>
+
+  <p>Designing and analyzing a 250lbf amateur liquid rocket engine to learn about fluid systems and expand on propulsion knowledge.</p>
+
+  <a href="/projects/liquid-rocket-engine">View Project →</a>
+</div>
 ___
 <div class="site-preview-card"> 
   <img src="/static/images/cmm.png" alt="CMM machine" style="height: 400px"> 
@@ -38,19 +47,7 @@ ___
   <a href="/projects/mining-rig-project">View Project →</a>
 </div>
 
-<!--
-___
-<div class="site-preview-card">
-  <img src="/static/images/rocket-nozzle.png" alt="Liquid rocket">
-
-  <h2>Liquid Rocket Engine</h2>
-
-  <p>COMING SOON</p>
-
-  <a href="/projects/liquid-rocket-engine">View Project →</a>
-</div>
-
-___
+<!-- ___
 <div class="site-preview-card">
   <img src="/static/images/aero-testbed.png" alt="Aerospace Testbed">
 
@@ -59,5 +56,4 @@ ___
   <p>COMING SOON</p>
 
   <a href="/projects/aerospace-testbed">View Project →</a>
-</div>
--->
+</div> -->
