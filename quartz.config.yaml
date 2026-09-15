@@ -35,9 +35,9 @@ configuration:
         highlight: rgba(143, 159, 169, 0.15)
         textHighlight: "#b3aa0288"
     typography:
-      title: DM Sans
-      header: DM Sans
-      body: DM Sans
+      title: Calibri
+      header: Calibri
+      body: Calibri
       code: IBM Plex Mono
 plugins:
   - source: "@quartz-community/created-modified-date"
@@ -121,9 +121,9 @@ plugins:
     enabled: true
     options:
       useThemeFonts: false
-      fontOrigin: googleFonts
-      body: DM Sans
-      header: DM Sans
+      fontOrigin: selfHosted # Options: googleFonts, selfHosted
+      body: Calibri
+      header: Calibri
       code: IBM Plex Mono
     order: 60
   - source: "@quartz-community/remove-draft"
@@ -156,8 +156,8 @@ plugins:
       enableRSS: true
   - source: "@quartz-community/favicon"
     enabled: true
-  - source: "@quartz-community/og-image"
-    enabled: true
+  - source: "@quartz-community/og-image" # note to self: bad compabitility with self-hosted font files, so disable if using self-hosted fonts
+    enabled: false
   - source: "@quartz-community/cname"
     enabled: true
   - source: "@quartz-community/canvas-page"
