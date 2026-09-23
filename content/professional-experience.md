@@ -30,5 +30,5 @@ ___
 
 ● Improve inspection workflows by incorporating feedback from quality inspectors and metrology technicians closest to the end product; perform FMEA on proposed process changes and document in Management of Change (MOC) system
 
-**Click [here]("/metrology-projects") to see a list of projects that I am working on during my time at Entegris.**
+**Click [here]("./projects/metrology-proj") to see a list of projects that I am working on during my time at Entegris.**
 
