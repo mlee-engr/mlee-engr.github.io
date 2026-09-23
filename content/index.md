@@ -2,11 +2,17 @@
 title: Michael Lee's Portfolio
 ---
 # About Me
+- **U.S. Citizen** — eligible for clearance
+- Current **Engineering Co-op (Fall 2026) @ Entegris** working with manufacturing & quality engineers
+- **B.S. in Mechanical Engineering** from [Northwestern University](https://www.mccormick.northwestern.edu/). 
+- Incoming **M.S. Mechanical Engineering** student at [Colorado School of Mines](https://mechanical.mines.edu/grad-program/) (deferred start to August 2027 to gain experience & save up for tuition)
+- Long-term, I hope to work in aerospace — preferably on launch vehicles and spacecraft.
 
-B.S. in Mechanical Engineering from [Northwestern University](https://www.mccormick.northwestern.edu/). Incoming M.S. Mechanical Engineering student at [Colorado School of Mines](https://mechanical.mines.edu/grad-program/) — originally admitted for Fall 2026, but I formally deferred to Fall 2027 to gain industry experience, save for grad school, and avoid student loans.
-
-I'm currently an Engineering Co-op at Entegris, working with manufacturing & quality engineers on advanced packaging for semiconductor wafers and chips. Long-term, I hope to work in aerospace — preferably on launch vehicles and spacecraft.
-
+<ImageCarousel
+  images="/static/images/graduate.png, /static/images/clean_room.png, /static/images/l1-rocket.png, /static/images/vietnam.png"
+  captions="In Chicago after graduation from Northwestern; In an ISO 7 clean room; Level 1 High Power Rocket Launch!; A trip to northern Việt Nam"
+  width="100%"
+/>
 
 # What I'm Looking For
 
@@ -21,12 +27,6 @@ I'm currently an Engineering Co-op at Entegris, working with manufacturing & qua
 # Why Should You Hire Me?
 I want to see designs through each step to its final stage — not just hand off a drawing. My biggest weakness is limited industry experience, but I'm quick to become an expert at anything I put my mind to: I joined Entegris in July knowing nothing about quality or metrology, and by August, I began contributing to high-stakes projects. For me, learning by immersion (**especially speaking with engineers and technicians**) while facing real problems head-on beats studying a textbook front to back any day.
 
-
-<ImageCarousel
-  images="/static/images/graduate.png, /static/images/clean_room.png, /static/images/l1-rocket.png, /static/images/vietnam.png"
-  captions="In Chicago after graduation from Northwestern; In an ISO 7 clean room; Level 1 High Power Rocket Launch!; A trip to northern Việt Nam"
-  width="100%"
-/>
 
 
 # My Résumé & Projects

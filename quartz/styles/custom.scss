@@ -2,35 +2,17 @@
 
 @use "./smallLogo";
 @use "./experience";
-@use "../components/styles/explorer-custom";
 
-// put your custom CSS here!
+// ==========================================================================
+// Custom Variables
+// ==========================================================================
 
-/* ==========================================================================
-   Import Table of Contents Styles
-   ========================================================================== */
+$body-font-size: 1.1rem;
+$body-line-height: 1.5rem;
 
-@use "../components/styles/customTOC";  // Updated path
-
-/* ==========================================================================
-   Profile Sidebar - Extend Left-Side Working Area
-   ========================================================================== */
-
-@media screen and (min-width: 1024px) {
-  & .sidebar.left {
-    padding-left: 0;
-    padding-right: 2rem;
-  }
-
-  & .sidebar.left .author__content,
-  & .sidebar.left .author__urls-wrapper {
-    margin-left: 2rem;
-  }
-}
-
-/* ==========================================================================
-   Calibri Font
-   ========================================================================== */
+// ==========================================================================
+// Calibri Font
+// ==========================================================================
 
 @font-face {
   font-family: "Calibri";
@@ -64,9 +46,9 @@
   font-display: swap;
 }
 
-/* ==========================================================================
-   Global Font Variables
-   ========================================================================== */
+// ==========================================================================
+// Global Font Variables
+// ==========================================================================
 
 :root {
   --bodyFont: "Calibri", "DM Sans", Arial, sans-serif !important;
@@ -75,12 +57,13 @@
   --codeFont: "IBM Plex Mono", "Courier New", monospace !important;
 }
 
-/* ==========================================================================
-   Main Content Font Override
-   ========================================================================== */
+// ==========================================================================
+// Main Content
+// ==========================================================================
 
 body {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+  font-size: $body-font-size !important;
 }
 
 main {
@@ -90,10 +73,6 @@ main {
 article {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
 }
-
-/* ==========================================================================
-   Body Text
-   ========================================================================== */
 
 p,
 li,
@@ -105,162 +84,13 @@ td,
 th,
 label {
   font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+  line-height: $body-line-height !important;
 }
 
-/* ==========================================================================
-   Links
-   ========================================================================== */
-
-a {
-  font-family: inherit;
-}
-
-/* ==========================================================================
-   Headings
-   ========================================================================== */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
-}
-
-/* ==========================================================================
-   Code
-   ========================================================================== */
-
-code,
-pre,
-pre code,
-kbd,
-samp {
-  font-family: "IBM Plex Mono", "Courier New", monospace !important;
-}
-
-/* ==========================================================================
-   Additional TOC Overrides (if needed)
-   ========================================================================== */
-
-/* If you want to adjust the TOC font to match your Calibri theme */
-.toc {
-  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
-}
-
-.toc a {
-  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
-}
-
-
-
-/* Force larger explorer text */
 .explorer-content ul li > a,
 .explorer .folder-container div > a,
 .explorer .folder-container div > button span {
-  font-size: 1.5rem !important;
-  line-height: 1.15 !important;
+  font-family: "Calibri", "DM Sans", Arial, sans-serif !important;
+  font-size: $body-font-size !important;
+  line-height: $body-line-height !important;
 }
-
-/* ==========================================================================
-   Table of Contents — Larger Font Size
-   ========================================================================== */
-
-/* TOC heading button (the "Table of Contents" title) */
-button#toc h3,
-button.toc-header h3,
-.toc-header h3 {
-  font-size: 1.1rem !important;
-  line-height: 1.15 !important;
-}
-
-/* TOC content links (the individual headings) */
-#toc-content a,
-.toc-content a,
-.toc ul li a,
-.toc > ul > li > a {
-  font-size: 1.1rem !important;
-  line-height: 1.15 !important;
-}
-
-/* Nested TOC items (subheadings) */
-.toc ul ul li a,
-#toc-content ul ul li a {
-  font-size: 1rem !important;
-  line-height: 1.15 !important;
-}
-
-/* TOC fold icon */
-button#toc .fold,
-.toc .fold {
-  width: 1.1rem !important;
-  height: 1.15rem !important;
-}
-
-
-
-
-
-
-
-
-
-/* Custom formatting to adjust center width*/ 
-
-
-
-// @media (min-width: 1200px) {
-//   .page {
-//     min-width: 0 !important;
-//     max-width: 100% !important;
-//     width: 100% !important;
-//     padding-left: 1rem !important;
-//     padding-right: 1rem !important;
-//   }
-  
-//   .page > #quartz-body {
-//     min-width: 0 !important;
-//     max-width: 100% !important;
-//     width: 100% !important;
-//     grid-template-columns: 
-//       minmax(240px, 320px) 
-//       minmax(0, 800px) 
-//       minmax(240px, 320px) !important;
-//     column-gap: 2rem !important;
-//     justify-content: center !important;
-//     background-color: var(--lightgray) !important;
-//   }
-  
-//   .page > #quartz-body .sidebar {
-//     min-width: 0 !important;
-//     max-width: none !important;
-//     width: 100% !important;
-//     overflow: visible !important;
-//     background-color: transparent !important;
-//   }
-  
-//   /* ✅ FIX: Negative margin + padding to cover the gap */
-//   .page > #quartz-body .center,
-//   .page > #quartz-body footer {
-//     min-width: 0 !important;
-//     max-width: 100% !important;
-//     width: auto !important;
-//     margin-left: -2rem !important;    /* equal to column-gap */
-//     margin-right: -2rem !important;   /* equal to column-gap */
-//     padding-left: 2rem !important;    /* restores inner spacing */
-//     padding-right: 2rem !important;
-//     background-color: var(--light) !important;
-//   }
-  
-//   .page > #quartz-body .center .image-carousel,
-//   .page > #quartz-body .center .pdf-viewer {
-//     max-width: 100% !important;
-//     min-width: 0 !important;
-//   }
-  
-//   .page > #quartz-body .center img {
-//     max-width: 100% !important;
-//     height: auto !important;
-//   }
-// }
