@@ -13,7 +13,7 @@ ___
 
   <p>Designing and analyzing a 250lbf amateur liquid rocket engine to learn about fluid systems and expand on propulsion knowledge.</p>
 
-  <a href="/projects/rocket-proj/index">View Project →</a>
+  <a href="/projects/rocket-proj/">View Project →</a>
 </div>
 
 ___
@@ -24,7 +24,7 @@ ___
  
   <p>A collection of projects being worked on at my Engineering Co-op at Entegris: from automating data analysis with Python to designing CMM test fixtures to improve measurement repeatability.</p> 
  
-  <a href="/projects/metrology-proj/index">View Project →</a> 
+  <a href="/projects/metrology-proj/">View Project →</a> 
 </div> 
 
 ___
@@ -35,7 +35,7 @@ ___
 
   <p>Gear reducer project involving shaft design, fatigue/yield analysis, bearing/gear selection and producing detailed CAD models and drawings in Siemens NX.</p>
 
-  <a href="/projects/gearbox-proj/index">View Project →</a>
+  <a href="/projects/gearbox-proj/">View Project →</a>
 </div>
 
 ___
@@ -46,7 +46,7 @@ ___
 
   <p>An ethereum mining rig that generated over $2,500 in profits during the 2021 GPU mining boom.</p>
 
-  <a href="/projects/mining-rig-proj/index">View Project →</a>
+  <a href="/projects/mining-rig-proj/">View Project →</a>
 </div>
 
 <!-- ___
