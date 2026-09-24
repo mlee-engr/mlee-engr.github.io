@@ -9,7 +9,7 @@ ___
 I love rockets! Some skills & software I plan to learn/improve upon:
 - **CFD & FEA**: I plan to run the same simulations in ANSYS and Star-CCM+.
 - **CAD**: I plan to make parts, assemblies, and drawings in both Siemens NX and SolidWorks.
-- **Fluid Systems**: I plan to design the plumbing for the propellant feed system and a static-fire test stand.
+- **Fluid Systems**: I plan to design the plumbing for the propellant feed system and a static-fire test stand.  
 ___
 
 # Nozzle & Combustion Chamber Design
