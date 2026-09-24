@@ -94,3 +94,85 @@ label {
   font-size: $body-font-size !important;
   line-height: $body-line-height !important;
 }
+
+
+/* ==========================================================================
+   Expand Grid (horizontal width)
+   ========================================================================== */
+
+@media (min-width: 1200px) {
+  .page > #quartz-body {
+    width: 70% !important;
+    max-width: none !important;
+  }
+}
+
+/* ==========================================================================
+   PDF Embed
+   ========================================================================== */
+
+.pdf-embed {
+  width: 100%;
+  margin: 1.5rem auto;
+  border: 2px solid var(--gray);
+  border-radius: 6px;
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: var(--light);
+}
+
+.pdf-embed__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background-color: var(--lightgray);
+  border-bottom: 1px solid var(--gray);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pdf-embed__title {
+  font-weight: 600;
+  color: var(--darkgray);
+  font-size: 0.95rem;
+}
+
+.pdf-embed__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pdf-embed__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+  white-space: nowrap;
+}
+
+.pdf-embed__btn:hover {
+  opacity: 0.85;
+}
+
+.pdf-embed__btn--primary {
+  background-color: var(--secondary);
+  color: var(--light);
+}
+
+.pdf-embed__btn--secondary {
+  background-color: transparent;
+  color: var(--secondary);
+  border: 1px solid var(--secondary);
+}
+
+.pdf-embed__frame {
+  width: 100%;
+  border: none;
+  display: block;
+}
