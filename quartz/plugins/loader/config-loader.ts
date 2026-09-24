@@ -490,10 +490,11 @@ export async function loadQuartzConfig(
     return instances
   }
 
-  // Import built-in plugins
+  // Import built-in plugins - My Own ones :D
   const builtinPlugins = await import("../index")
   const builtinTransformers: unknown[] = [
     builtinPlugins.ImageCarousel(),
+    builtinPlugins.PdfEmbed(),
   ]
   const builtinEmitters = [
     builtinPlugins.ComponentResources(),

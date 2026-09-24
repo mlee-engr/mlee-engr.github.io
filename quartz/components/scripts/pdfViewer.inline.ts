@@ -60,7 +60,7 @@ async function renderPDF() {
           continue
         }
 
-        const pixelRatio = window.devicePixelRatio || 1
+        const pixelRatio = window.devicePixelRatio || 2
 
         canvas.width = Math.floor(viewport.width * pixelRatio)
         canvas.height = Math.floor(viewport.height * pixelRatio)
@@ -113,3 +113,16 @@ document.addEventListener("nav", renderPDF)
 document.addEventListener("render", renderPDF)
 
 renderPDF()
+
+let resizeTimeout
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimeout)
+  resizeTimeout = setTimeout(() => {
+    // Force re-render by clearing the flag
+    document.querySelectorAll(".pdf-viewer").forEach(viewer => {
+      viewer.removeAttribute("data-pdf-rendered")
+      viewer.innerHTML = ""
+    })
+    renderPDF()
+  }, 300)
+})
