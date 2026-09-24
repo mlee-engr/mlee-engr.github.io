@@ -3,7 +3,7 @@ title: 1. Liquid Rocket Engine
 ---
 ___
 > [!note]
-> This is a new and ongoing project started on September 14, 2026.
+> This is an ongoing project done in my free time.
 
 # Background
 I love rockets! Some skills & software I plan to learn/improve upon:
