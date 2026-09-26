@@ -229,13 +229,7 @@ plugins:
     layout:
       position: beforeBody
       priority: 10
-
-  - source: "@quartz-community/content-meta"
-    enabled: true
-    layout:
-      position: beforeBody
-      priority: 20
-
+      
   - source: "@quartz-community/tag-list"
     enabled: false
     layout:
