@@ -3,7 +3,7 @@ title: Nozzle & Combustion Chamber Design
 ---
 
 # Initial specs
-My initial chosen design specs are: 
+My initial chosen design specs were: 
 
 <div align="center">
 
@@ -30,23 +30,27 @@ Nitrous oxide is a common oxidizer and E85 is readily available at the local gas
 
 L* should be between [40 and 120cm](https://arc.aiaa.org/doi/pdf/10.2514/6.2025-99491) to allow proper residence time in the combustion chamber. For the initial, I am sticking with 50cm. 
 
-Contraction ratios typically vary from 2 to 10 for rocket engines - I am starting at 4 for now and iterating as necessary (See section 2.2).
+Contraction ratios typically vary from 2 to 10 for rocket engines - I am starting at 4 for now and iterating as necessary.
 
-# Nozzle contour 
-The nozzle contour can be tweaked by adjusting the characteristic length L*, nozzle exit pressure, and contraction area ratio (Ac/At). Using the initial chosen values and [Rocket Propulsion Analysis (RPA)](https://www.rocket-propulsion.com/index.htm) Software generates the following contour:
+# Initial Results
+Initial RPA results with an optimal O/F ratio of ~ 8 led to a chamber temperature of $T_c \approx 3171K$. I then did an O/F ratio and $I_{sp}$ (specific impulse) vs $T_c$ analysis to inform a more balance design that
+**(1) minimally sacrifices $I_{sp}$ (i.e. efficiency)** and
+**(2) reasonably reduces the combustion temperature for easier material selection, allowing simpler cooling methods** 
 
-<div align="center">
 
-![alt text](./images/initial-contour.png)
 
-</div>
 
-However, these dimensions (notably chamber diameter, throat diameter, and exit diameter) are too small for my liking, so I tweaked the L* value as follows: 
-> [!warning] Work in Progress
-> This is the current progress of my project. Check back for more! I will update as I develop this project.
 
+
+
+
+
+
+
+
+<!-- 
 # Future Work
 ## Verifying and iterating on L*
 An initial $L^*$ of *{insert value chosen here when decided}* was selected based on the desired chamber geometry and overall engine packaging. Future CFD analysis and, ultimately, hot-fire testing could be used to evaluate combustion efficiency and determine whether the selected $L^*$ provides sufficient chamber volume for the propellants to mix and react effectively.
 
-If combustion efficiency is lower than assumed in the ideal RPA analysis, the engine's effective $c^*$ and overall $I_{sp}$ will decrease. The chamber length and $L^*$ could therefore be iterated based on the measured or simulated combustion performance.
+If combustion efficiency is lower than assumed in the ideal RPA analysis, the engine's effective $c^*$ and overall $I_{sp}$ will decrease. The chamber length and $L^*$ could therefore be iterated based on the measured or simulated combustion performance. -->
