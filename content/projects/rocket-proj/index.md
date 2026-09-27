@@ -13,8 +13,7 @@ I love rockets! Some skills & software I plan to learn/improve upon:
 ___
 
 # Nozzle & Combustion Chamber Design
-> [!warning] Work in Progress
-> Update with my nozzle & combustion chamber geometry in CAD. 
+
 ![alttext](./images/textbook-contour.png)
 [**View Page**](/nozzle-and-chamber)
 
