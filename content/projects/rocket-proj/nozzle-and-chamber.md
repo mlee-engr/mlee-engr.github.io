@@ -80,6 +80,11 @@ From a visual perspective, I initially did not like the geometry: the proportion
 
 > [!warning] Work in Progress
 > This is the current status of my project. Will develop on this further in the near future! Stay tuned!
+
+
+<!-- # Hand Calculations
+For the sake of learning, I also wanted to do basic hand calculations with the standard isentropic model of nozzle flow to calculate pressures, velocities, and temperatures at sections downstream of the combustion chamber. I waited until this point because I needed not only the designed combustion chamber pressure, but also the combustion chamber temperature to proceed - the latter of which is difficult to calculate without a simulation.  -->
+
 <!-- 
 # Future Work
 ## Verifying and iterating on L*
