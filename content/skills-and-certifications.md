@@ -1,5 +1,5 @@
 ---
-title: Skills & Certifications
+title: 3. Skills & Certifications
 ---
 > [!warning] Work in Progress
 > This site is still a work in progress, but I decided to publish it as I build. The engineering process is rarely as clean as the finished product a consumer sees.

@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "plugins": {
+    "explorer": {
+      "source": "github:quartz-community/explorer",
+      "resolved": "https://github.com/quartz-community/explorer.git",
+      "commit": "bf8e93766283caab163fc11bc8b5904790a769bc",
+      "installedAt": "2026-09-30T05:29:46.377Z"
+    },
+    "fonts": {
+      "source": "github:quartz-community/fonts",
+      "resolved": "https://github.com/quartz-community/fonts.git",
+      "commit": "e7c824b6149f46a50b98a5c1474605385090895d",
+      "installedAt": "2026-09-30T05:28:23.944Z"
+    }
+  }
+}

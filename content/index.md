@@ -1,28 +1,24 @@
 ---
 title: Michael Lee's Portfolio
 ---
+___
+
 # About Me
-- **U.S. Citizen** — eligible for clearance
-- Current **Engineering Co-op (Fall 2026) @ Entegris** working with manufacturing & quality engineers
+- **U.S. Citizen** 
+- Current **Engineering Co-op (Fall 2026) @ Entegris** 
 - **B.S. in Mechanical Engineering** from [Northwestern University](https://www.mccormick.northwestern.edu/). 
 - Incoming **M.S. Mechanical Engineering** student at [Colorado School of Mines](https://mechanical.mines.edu/grad-program/) (deferred start to August 2027 to gain experience & save up for tuition)
 - Long-term, I hope to work in aerospace — preferably on launch vehicles and spacecraft.
+
+# What I'm Looking For
+
+**Spring** and **Summer 2027** internships in **Design, R&D, and/or Manufacturing**. Connect with me at [michael_lee1@mines.edu](mailto:michael_lee1@mines.edu) or [mlee.engr@proton.me](mailto:mlee.engr@proton.me).
 
 <ImageCarousel
   images="/static/images/graduate.png, /static/images/clean_room.png, /static/images/l1-rocket.png, /static/images/vietnam.png"
   captions="In Chicago after graduation from Northwestern; In an ISO 7 clean room; Level 1 High Power Rocket Launch!; A trip to northern Việt Nam"
   width="100%"
 />
-
-# What I'm Looking For
-
-**Spring** and **Summer 2027** internships in **Design, Integration/Testing, and/or Manufacturing**. Rather than specializing early, I'm building my own engineering rotation program by selectively choosing internship types to gain exposure across the product development lifecycle. Connect with me at [michael_lee1@mines.edu](mailto:michael_lee1@mines.edu) or [mlee.engr@proton.me](mailto:mlee.engr@proton.me).
-
-☐ **Design / R&D** — To sharpen CAD modeling, prototyping, and engineering analysis skills
-☐ **Integration / Test** — To develop hands-on work with test plans, data acquisition, and validation
-☐ **Manufacturing** — To gain exposure to production processes and scaling up operations
-✅ **Quality / Metrology** — Ensuring product quality before shipping to customers (Entegris Co-op)
-
 
 # Why Should You Hire Me?
 I want to see designs through each step to its final stage — not just hand off a drawing. My biggest weakness is limited industry experience, but I'm quick to become an expert at anything I put my mind to: I joined Entegris in July knowing nothing about quality or metrology, and by August, I began contributing to high-stakes projects. For me, learning by immersion (**especially speaking with engineers and technicians**) while facing real problems head-on beats studying a textbook front to back any day.

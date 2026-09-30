@@ -199,6 +199,10 @@ plugins:
 
   - source: "@quartz-community/explorer"
     enabled: true
+    options:
+      title: Explorer
+      folderDefaultState: "open"
+      useSavedState: False
     layout:
       position: left
       priority: 50

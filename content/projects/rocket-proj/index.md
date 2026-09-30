@@ -1,5 +1,5 @@
 ---
-title: 1. Liquid Rocket Engine
+title: .🚀 Liquid Rocket Engine
 ---
 ___
 > [!note]
