@@ -193,7 +193,7 @@ plugins:
 
   - source: "@quartz-community/folder-page"
     enabled: true
-
+  
   - source: "@quartz-community/tag-page"
     enabled: true
 
@@ -201,8 +201,9 @@ plugins:
     enabled: true
     options:
       title: Explorer
-      folderDefaultState: "open"
-      useSavedState: False
+      folderClickBehavior: link # "link" to navigate or "collapse" to toggle
+      folderDefaultState: open # "collapsed" or "open"
+      useSavedState: false
     layout:
       position: left
       priority: 50

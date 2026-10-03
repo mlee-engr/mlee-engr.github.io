@@ -59,7 +59,7 @@
     "@quartz-community/description": "^1.0.0",
     "@quartz-community/encrypted-pages": "^1.0.0",
     "@quartz-community/explicit-publish": "^1.0.0",
-    "@quartz-community/explorer": "^1.0.0",
+    "@quartz-community/explorer": "0.1.0",
     "@quartz-community/favicon": "^1.0.0",
     "@quartz-community/folder-page": "^1.0.0",
     "@quartz-community/footer": "^1.0.0",

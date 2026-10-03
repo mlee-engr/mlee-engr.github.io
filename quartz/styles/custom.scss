@@ -100,10 +100,10 @@ label {
    Expand Grid (horizontal width)
    ========================================================================== */
 
-@media (min-width: 1200px) {
+@media (min-width: 600px) {
   .page > #quartz-body {
-    width: 70% !important;
-    max-width: none !important;
+    width: 100% !important;
+    max-width: 1800px !important;
   }
 }
 
